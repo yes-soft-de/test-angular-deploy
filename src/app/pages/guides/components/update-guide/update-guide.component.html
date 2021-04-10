@@ -1,0 +1,49 @@
+<!-- general form elements -->
+<div class="container-fluid" *ngIf="guide != null">
+  <div class="content-header">
+    <h1 class="text-center mt-5 mb-3">{{'approve-guide-page' | translate}}</h1>
+  </div>
+  <div class="card card-info mb-5">
+    <div class="card-header bg-light-blue text-white p-3">
+      <!-- <h3 class="card-title mb-0">{{'new-event' | translate}}</h3> -->
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="updateGuideFrom" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div class="form-group">
+          <label class="col-form-label" for="inputStatusSuccess">{{'status' | translate}}</label>
+          <select class="form-control"
+                  name="status"
+                  formControlName="status">
+            <option value="">{{'select-status-placeholder' | translate}}</option>
+            <option value="approved" [selected]="guide.status == 'approved'">{{'approved' | translate}}</option>
+            <option value="not-approved" [selected]="guide.status == 'not-approved'">{{'not-approved' | translate}}</option>
+          </select>
+          <span class="invalid-feedback" *ngIf="updateGuideFrom.get('status').errors?.required">{{'status-field-required' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputcost">{{'cost' | translate}}</label>
+          <input type="number"
+                 [ngClass]="{'is-invalid': updateGuideFrom.get('cost').errors &&
+                           (updateGuideFrom.get('cost').touched || updateGuideFrom.get('cost').dirty)}"
+                 name="cost"
+                 formControlName="cost"
+                 id="exampleInputcost"
+                 class="form-control"
+                 placeholder="{{'cost-type-placeholder' | translate}}">
+          <span class="invalid-feedback" *ngIf="updateGuideFrom.get('cost').errors?.required">{{'cost-field-is-required' | translate}}</span>
+        </div>
+      </div>
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <button type="submit" class="btn bg-light-blue text-white" [disabled]="updateGuideFrom.invalid">{{'update' | translate}}</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.card -->
+</div>
+<div *ngIf="guide == null">
+  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>

@@ -1,0 +1,171 @@
+<div class="w-100 mb-4" *ngIf="(statistics$ | async) as statistics">
+  <div class="container">
+    <!--Start Home States Page-->
+    <div class="home-stat">
+      <h1 class="my-4 text-center">{{'dashboard-page' | translate}}</h1>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="stat mb-3 st_categories">
+            <i class="fa fa-institution fa-fw fa-5x"></i>
+            <div>
+              <h6>{{'total-regions' | translate }}</h6>
+              <span><a routerLink="/regions">{{statistics?.regions}}</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="stat mb-3 st_animes">
+            <i class="fa fa-calendar-check-o fa-fw fa-5x"></i>
+            <div>
+              <h6>{{'total-events' | translate }}</h6>
+              <span><a routerLink="/events">{{statistics?.events}}</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="stat mb-3 st_episode_coming_soon">
+            <i class="fa fa-tags fa-fw fa-5x"></i>
+            <div>
+              <h6>{{'total-completed-orders' | translate }}</h6>
+              <span><a routerLink="/orders/accepted">{{statistics?.completedOrders}}</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mx-auto">
+          <div class="stat mb-3 st_clients">
+            <i class="fa fa-user-circle fa-fw fa-5x"></i>
+            <div>
+              <h6>{{'total-guides' | translate }}</h6>
+              <span><a routerLink="/guides">{{statistics?.users?.guides}}</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mx-auto">
+          <div class="stat mb-3 st_pending">
+            <i class="fa fa-users fa-fw fa-5x"></i>
+            <div>
+              <h6>{{'total-tourists' | translate }}</h6>
+              <span><a routerLink="">{{statistics?.users?.tourists}}</a></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--Start Latest Section-->
+    <div class="latest mt-5">
+      <div class="row">
+
+        <div class="col-12 col-md-6 mb-3">
+          <div class="card bg-gradient-x-dark-blue text-white border-0">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="weather-details text-center">
+                  <span class="block white darken-1">{{'rating' | translate}}</span>
+<!--                  <span class="font-large-2 block white darken-4">-5&deg;</span>-->
+<!--                  <span class="font-medium-4 text-bold-500 white darken-1">London, UK</span>-->
+                </div>
+              </div>
+              <div class="card-footer bg-gradient-x-dark-blue border-0">
+                <div class="row">
+                  <div title="{{'rating' | translate}}" class="col-6 text-center display-table-cell white mx-auto">
+                    <i class="fa fa-star fa-fw mx-1"></i> <span>{{statistics?.ratings}}</span>
+                  </div>
+<!--                  <div title="{{'chats-with-users' | translate}}" class="col-6 text-center display-table-cell white">-->
+<!--                    <i class="fa fa-users fa-fw mx-1"></i> <span>5</span>-->
+<!--                  </div>-->
+                </div>
+              </div>
+            </div><!--.card-content-->
+          </div><!--.card-->
+        </div><!--.col-12-->
+
+        <div class="col-12 col-md-6 mb-3">
+          <div class="card bg-gradient-x-info text-white border-0">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="weather-details text-center">
+                  <span class="block white darken-1">{{'comments-number' | translate}}</span>
+                  <!--                  <span class="font-large-2 block white darken-4">-5&deg;</span>-->
+                  <!--                  <span class="font-medium-4 text-bold-500 white darken-1">London, UK</span>-->
+                </div>
+              </div>
+              <div class="card-footer bg-gradient-x-info border-0">
+                <div class="row">
+                  <div title="{{'comments-number' | translate}}" class="col-4 text-center display-table-cell white mx-auto">
+                    <i class="fa fa-comments fa-fw mx-1"></i> <span>{{statistics?.comments}}</span>
+                  </div>
+<!--                  <div title="{{'device-reaction-number' | translate}}" class="col-4 text-center display-table-cell white">-->
+<!--                    <i class="fa fa-tv fa-fw mx-1"></i> <span>20</span>-->
+<!--                  </div>-->
+<!--                  <div title="{{'real-estate-reaction-number' | translate}}" class="col-4 text-center display-table-cell white">-->
+<!--                    <i class="fa fa-building fa-fw mx-1"></i> <span>30</span>-->
+<!--                  </div>-->
+                </div>
+              </div>
+            </div><!--.card-content-->
+          </div><!--.card-->
+        </div><!--.col-12-->
+
+        <div class="col-12 col-md-6">
+          <!--Start Latest ArtistAdmin-->
+          <div class="late mb-3">
+            <div class="card">
+              <div class="card-header">
+                {{'latest' | translate }} {{latestGuidesNumber}} {{'guides' | translate }}
+              </div>
+              <div class="card-body" *ngIf="allGuides?.length != 0">
+                <ng-container *ngFor="let guide of allGuides; let i = index">
+                  <ng-container *ngIf="i < latestGuidesNumber">
+                    <div class="late_info">
+                      {{guide?.name.slice(0, 20)}}
+                      <a routerLink="/guides/{{guide?.id}}" class="btn btn-success btn-sm py-0 float-right">{{'view' | translate}}</a>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <div class="card-body" *ngIf="allGuides?.length == 0">
+                <div class="late_info">
+                  {{'guides-not-found' | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Start Latest Painting-->
+        <div class="col-12 col-md-6">
+          <div class="late mb-3">
+            <div class="card">
+              <div class="card-header">
+                {{'latest' | translate }} {{latestEventsNumber}} {{'events' | translate }}
+              </div>
+              <div class="card-body" *ngIf="allEvents?.length != 0">
+                <ng-container *ngFor="let event of allEvents; let i = index">
+                  <ng-container *ngIf="i < latestEventsNumber">
+                    <div class="late_info">
+                      {{event?.name.slice(0, 20)}}
+                      <a routerLink="/events/edit/{{event?.id}}"
+                         class="btn btn-success btn-sm py-0 float-right">{{'update' | translate}}</a>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <div class="card-body" *ngIf="allEvents?.length == 0">
+                <div class="late_info">
+                  {{'events-not-found' | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!(statistics$ | async)">
+  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>
+
+
+<app-footer></app-footer>

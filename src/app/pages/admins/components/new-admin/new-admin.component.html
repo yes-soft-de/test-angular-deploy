@@ -1,0 +1,78 @@
+<!-- general form elements -->
+<div class="container-fluid">
+  <div class="content-header">
+    <h1 class="text-center mt-5 mb-3">{{'new-admin-page' | translate}}</h1>
+  </div>
+  <div class="card card-info mb-5">
+    <div class="card-header bg-light-blue text-white p-3">
+      <!-- <h3 class="card-title mb-0">{{'new-event' | translate}}</h3> -->
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="addAdminForm" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="exampleInputname1">{{'name' | translate}}</label>
+          <input type="text"
+                 [ngClass]="{'is-invalid': addAdminForm.get('name').errors &&
+                           (addAdminForm.get('name').touched || addAdminForm.get('name').dirty)}"
+                 name="name"
+                 formControlName="name"
+                 id="exampleInputname1"
+                 class="form-control"
+                 placeholder="{{'name-type-placeholder' | translate}}">
+          <span class="invalid-feedback" *ngIf="addAdminForm.get('name').errors?.required">{{'name-field-is-required' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputpassword">{{'password' | translate}}</label>
+          <div class="position-relative">
+          <input #passwordField type="password"
+                 [ngClass]="{'is-invalid': addAdminForm.get('password').errors &&
+                           (addAdminForm.get('password').touched || addAdminForm.get('password').dirty)}"
+                 name="password"
+                 formControlName="password"
+                 id="exampleInputpassword"
+                 class="form-control"
+                 placeholder="{{'password-type-placeholder' | translate}}">
+            <i (mouseenter)="showPassword()" (mouseleave)="hidePassword()" class="fa fa-eye fa-custom"></i>
+          </div>
+          <span class="invalid-feedback" *ngIf="addAdminForm.get('password').errors?.required">{{'password-field-is-required' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail">{{'email' | translate}}</label>
+          <input type="email"
+                 [ngClass]="{'is-invalid': addAdminForm.get('email').errors &&
+                           (addAdminForm.get('email').touched || addAdminForm.get('email').dirty)}"
+                 name="email"
+                 formControlName="email"
+                 id="exampleInputEmail"
+                 class="form-control"
+                 placeholder="{{'email-type-placeholder' | translate}}">
+          <span class="invalid-feedback" *ngIf="addAdminForm.get('email').errors?.required">{{'email-field-is-required' | translate}}</span>
+          <span class="invalid-feedback" *ngIf="addAdminForm.get('email').errors?.email">{{'email-field-valid' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputupload">{{'upload' | translate}}</label>
+          <div class="input-group input-group-custom">
+            <div class="custom-file">
+              <input #imageInput type="file" accept="image/*" class="custom-file-input" id="file-input"
+                     (change)="updateName(imageInput)">
+              <label class="custom-file-label" for="file-input">{{imageName | translate}}</label>
+            </div>
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" (click)="processFile(imageInput)" [disabled]=!fileSelected>
+                {{uploadButtonValue | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <button type="submit" class="btn bg-light-blue text-white" [disabled]="addAdminForm.invalid">{{'create' | translate}}</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.card -->
+</div>
