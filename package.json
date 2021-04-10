@@ -8,9 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && gh-pages -d dist"
   },
-  "homepage": "https://yes-soft-de.github.io/test-angular-deploy",
+  "homepage": "https://yes-soft-de.github.io/yes-soft-de.github.io",
   "private": true,
   "dependencies": {
     "@agm/core": "^3.0.0-beta.0",

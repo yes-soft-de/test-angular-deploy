@@ -61,7 +61,7 @@ const firebaseConfig = {
       }
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
+      apiKey: environment.googleMapTokenKey,
       libraries: ['places']
     })
   ],
