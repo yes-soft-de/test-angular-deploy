@@ -4249,7 +4249,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClient"]]
         }
       }), _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-        apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
+        apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
         libraries: ['places']
       })]]
     });
@@ -4278,7 +4278,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClient"]]
             }
           }), _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-            apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
+            apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
             libraries: ['places']
           })],
           providers: [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"]],
@@ -4601,7 +4601,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var environment = {
       production: false,
-      googleMapTokenKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I'
+      googleMapTokenKey: ''
     };
     /*
      * For easier debugging in development mode, you can import the following file

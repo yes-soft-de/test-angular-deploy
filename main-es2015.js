@@ -2234,7 +2234,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                 }
             }),
             _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-                apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
+                apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
                 libraries: ['places']
             })
         ]] });
@@ -2268,7 +2268,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                         }
                     }),
                     _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-                        apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
+                        apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
                         libraries: ['places']
                     })
                 ],
@@ -2493,7 +2493,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    googleMapTokenKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I'
+    googleMapTokenKey: ''
 };
 /*
  * For easier debugging in development mode, you can import the following file
