@@ -60,10 +60,6 @@ const firebaseConfig = {
         deps: [HttpClient]
       }
     }),
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapTokenKey,
-      libraries: ['places']
-    })
   ],
   providers: [AngularFirestore],
   exports: [],

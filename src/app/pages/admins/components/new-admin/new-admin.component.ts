@@ -8,6 +8,7 @@ import {ImageSnippet} from '../../../../@theme/model/image-snippet';
 import {AdminsService} from '../../services/admins.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DOCUMENT} from '@angular/common';
+import { ActivationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-admin',
@@ -29,10 +30,16 @@ export class NewAdminComponent implements OnInit {
               private adminService: AdminsService,
               public translate: TranslateService,
               private toaster: ToastrService,
+              private router: Router,
               private render: Renderer2,
               @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
+    this.router.events.subscribe(route => {
+      if (route instanceof ActivationEnd) {
+        this.checkCurrentLang();
+      }
+    });
     this.addAdminForm = new FormGroup({
       name: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -99,11 +106,23 @@ export class NewAdminComponent implements OnInit {
     this.store.dispatch(addAdmin({admin: formObject}));
   }
 
+
+  checkCurrentLang() {
+    if (this.translate.currentLang && this.translate.currentLang == 'ar') {
+      console.log('current lang : ', this.translate.currentLang);
+      this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
+      this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+    } else {
+      this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
+      this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+    }
+  }
+
   checkLangChange() {
     this.translate.onLangChange.subscribe(lang => {
       console.log('lang change to : ', lang);
-      if (lang.lang == 'ar') {
-        console.log('lang : ', lang.lang);
+      if (lang?.lang && lang?.lang == 'ar') {
+        console.log('lang : ', lang?.lang);
         this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
         this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
       } else {

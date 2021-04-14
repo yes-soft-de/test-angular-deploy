@@ -52,7 +52,7 @@ export const reducer = createReducer(
   on(RegionActions.upsertRegions,
     (state, action) => adapter.upsertMany(action.regions, state)
   ),
-  on(RegionActions.updateRegion,
+  on(RegionActions.updateRegionSuccess,
     (state, action) => adapter.updateOne(action.region, state)
   ),
   on(RegionActions.updateRegions,

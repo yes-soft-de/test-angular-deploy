@@ -76,12 +76,6 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
             return email;
           }
         }
-        if (res.phoneNumber) {
-          const phoneNumber = res.phoneNumber.toString().toLocaleLowerCase().match(this.name.toLocaleLowerCase());
-          if (phoneNumber) {
-            return phoneNumber;
-          }
-        }
       });
     }
   }

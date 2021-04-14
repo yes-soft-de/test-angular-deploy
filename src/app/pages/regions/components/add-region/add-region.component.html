@@ -18,26 +18,33 @@
                            (addRegionForm.get('name').touched || addRegionForm.get('name').dirty)}"
                            type="text"
                            name="name"
-                           id="inputNameSuccess"
                            formControlName="name"
+                           id="inputNameSuccess"
+                           (keydown)="searchLocation($event)"
                            placeholder="{{'name-type-placeholder' | translate}}">
+                    <div class="location-search-result px-3 py-2" *ngIf="showSearchResult">
+                        <ul class="list-unstyled mb-0" *ngIf="googleLocationsNameList">
+                            <li class="pb-1" *ngFor="let location of googleLocationsNameList" (click)="getLocationInfo(location)">{{location?.description}}</li>
+                        </ul>
+                        <div *ngIf="!googleLocationsNameList" class="lds-ring"><div></div><div></div><div></div><div></div></div>                        
+                    </div>
                     <span class="invalid-feedback" *ngIf="addRegionForm.get('name').errors?.required">{{'name-field-required' | translate}}</span>                      
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="exampleInputEmail1">{{'location' | translate}}</label>
                     <input type="text"
                            [ngClass]="{'is-invalid': addRegionForm.get('location').errors &&
                            (addRegionForm.get('location').touched || addRegionForm.get('location').dirty)}"
                            name="location"
-                           formControlName="location"
+                           formControlName="location" 
                            id="exampleInputlocation1"
                            class="form-control"
-                           placeholder="{{'location-type-placeholder' | translate}}">
+                           placeholder="{{'location-type-placeholder' | translate}}">                
                     <span class="invalid-feedback" *ngIf="addRegionForm.get('location').errors?.required">location Field Is Required</span>
                     <span class="invalid-feedback" *ngIf="addRegionForm.get('location').errors?.location">Please enter a vaild location address</span>
-                </div>
+                </div> -->
                 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="exampleInputplaceId1">PlaceId</label>
                     <input type="text"
                            [ngClass]="{'is-invalid': addRegionForm.get('placeId').errors &&
@@ -48,10 +55,10 @@
                            class="form-control"
                            placeholder="Type The Location Id">
                     <span class="invalid-feedback" *ngIf="addRegionForm.get('placeId').errors?.required">Location Id Field Is Required</span>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="exampleInputdescription1">{{'description' | translate}}</label>
-                    <textarea class="form-control" 
+                    <textarea class="form-control"
                            [ngClass]="{'is-invalid': addRegionForm.get('description').errors &&
                            (addRegionForm.get('description').touched || addRegionForm.get('description').dirty)}"
                            name="description"
@@ -60,34 +67,29 @@
                            placeholder="{{'description-type-placeholder' | translate}}">
                     </textarea>
                     <span class="invalid-feedback" *ngIf="addRegionForm.get('description').errors?.required">{{'descriptioon-field-required' | translate}}</span>
-                    <span class="invalid-feedback" *ngIf="addRegionForm.get('description').errors?.minlength">description Must Be Greater Than 3</span>       
+                </div>            
+                <div class="form-group">
+                    <label for="exampleInputupload">{{'upload' | translate}}</label>
+                    <div class="input-group input-group-custom">
+                        <div class="custom-file">
+                            <input #imageInput type="file" accept="image/*" class="custom-file-input" id="file-input"
+                                (change)="updateName(imageInput)">
+                            <label class="custom-file-label" for="file-input">{{imageName | translate}}</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" (click)="processFile(imageInput)" [disabled]=!fileSelected>
+                            {{uploadButtonValue | translate}}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn bg-sidebar-item-button text-white" [disabled]="addRegionForm.invalid || isSubmited">{{'create' | translate}}</button>
+                <button type="submit" class="btn bg-sidebar-item-button text-white" [disabled]="addRegionForm.invalid || imageUploaded">{{'create' | translate}}</button>
             </div>
         </form>
     </div>
     <!-- /.card -->
 </div>
-<div class="container">
-   
-    <h1>Angular Google Map with Search Box Example - ItSolutionStuff.com</h1>
-    
-    <div class="form-group">
-      <label>Enter address</label>
-      <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
-    </div>
-    
-    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-      <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-        ></agm-marker>
-    </agm-map>
-    
-    <h5>Address: {{address}}</h5>
-    <div>Latitude: {{latitude}}</div>
-    <div>Longitude: {{longitude}}</div>
-    
-  </div>

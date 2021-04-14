@@ -69,14 +69,19 @@ export const addRegions = createAction(
   props<{ regions: Region[] }>()
 );
 
-export const upsertRegions = createAction(
-  '[Region/API] Upsert Regions',
-  props<{ regions: Region[] }>()
-);
-
 export const updateRegion = createAction(
   '[Region/API] Update Region',
+  props<{ region: Region }>()
+);
+
+export const updateRegionSuccess = createAction(
+  '[Region/API] Update Region Success',
   props<{ region: Update<Region> }>()
+);
+
+export const updateRegionFailure = createAction(
+  '[Region/API] Update Region Failure',
+  props<{ error: string }>()
 );
 
 export const updateRegions = createAction(
@@ -87,6 +92,11 @@ export const updateRegions = createAction(
 export const deleteRegions = createAction(
   '[Region/API] Delete Regions',
   props<{ ids: string[] }>()
+);
+
+export const upsertRegions = createAction(
+  '[Region/API] Upsert Regions',
+  props<{ regions: Region[] }>()
 );
 
 export const clearRegions = createAction(

@@ -10,8 +10,6 @@ import { RegionEffects } from './store/region.effects';
 import { ThemeModule } from 'src/app/@theme/theme.module';
 import { AddRegionComponent } from './components/add-region/add-region.component';
 import { EditRegionComponent } from './components/edit-region/edit-region.component';
-import { AgmCoreModule } from '@agm/core';
-import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -24,12 +22,7 @@ import { environment } from 'src/environments/environment';
     ThemeModule,
     RegionsRoutingModule,
     StoreModule.forFeature(fromRegion.regionsFeatureKey, fromRegion.reducer),
-    EffectsModule.forFeature([RegionEffects]),
-    AgmCoreModule
-    // AgmCoreModule.forRoot({
-    //   apiKey: 'AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I',
-    //   libraries: ['places']
-    // })
+    EffectsModule.forFeature([RegionEffects]),   
   ]
 })
 export class RegionsModule { }

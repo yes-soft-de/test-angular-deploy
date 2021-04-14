@@ -8,6 +8,7 @@ import * as regionsAction from '../../store/region.actions';
 import { RegionState } from '../../store/region.reducer';
 import { getAllRegionsSelector } from '../../store/region.selector';
 import { HttpClient } from '@angular/common/http';
+import { RegionsService } from '../../services/regions.service';
 
 @Component({
   selector: 'app-all-regions',
@@ -21,13 +22,12 @@ export class AllRegionsComponent implements OnInit, OnDestroy {
   config: any;
   isDeleted: boolean;
   regionsSubscription: Subscription;
+  googleMapToken: string;
+  // googleLocation
 
-  constructor(private store: Store<RegionState>, private http: HttpClient) { }
+  constructor(private store: Store<RegionState>) { }
 
-  ngOnInit(): void {
-    this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=24.666626,46.7370781&rankby=distance&key=AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I').subscribe(
-      data => console.log(data)
-    );
+  ngOnInit(): void {    
     this.store.dispatch(regionsAction.loadRegions());
     this.getAllRegions();
   }

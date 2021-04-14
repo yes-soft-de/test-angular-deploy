@@ -23,9 +23,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         Authorization: `Bearer ` + token
       })
     });
-    if (req.url == AdminConfig.generalUploadAPI) {
+
+    if (req.url == AdminConfig.generalUploadAPI || 
+        req.url.indexOf(AdminConfig.googleMapSearchAPI) == 0 ||
+        req.url.indexOf(AdminConfig.googleMapPlaceDetailsAPI) == 0) {
       return next.handle(req);
     }
+    // return next.handle(req);
     return next.handle(modifiedReq);
   }
 }

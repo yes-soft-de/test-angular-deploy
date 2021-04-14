@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map, mergeMap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, mergeMap, switchMap } from 'rxjs/operators';
 import { AppState } from 'src/app/@theme/store/app-state';
 import { setLoadSpinner } from 'src/app/@theme/store/shared/shared.actions';
+import { Region } from '../model/region.model';
 import { RegionsService } from '../services/regions.service';
 import * as regionsAction from '../store/region.actions';
 
@@ -45,9 +47,9 @@ export class RegionEffects {
 
   loadRegion$ = createEffect(() => this.actions$.pipe(
     ofType(regionsAction.loadRegion),
-    mergeMap(action => this.regionService.createRegion(action.id)
+    mergeMap(action => this.regionService.getRegion(action.id)
       .pipe(
-        map(response => regionsAction.loadRegionSuccess({region: response})),
+        map(response => regionsAction.loadRegionSuccess({region: response.Data})),
         catchError(error => {
           console.log('error effect', error);
           return of(regionsAction.loadRegionFailure({error}))
@@ -60,7 +62,6 @@ export class RegionEffects {
     exhaustMap(action => this.regionService.createRegion(action.region)
       .pipe(
         map((response: any) => {
-          console.log('create effect reseponse :', response);
           this.toaster.success(response?.msg);
           return regionsAction.addRegionSuccess();
         }),
@@ -71,12 +72,37 @@ export class RegionEffects {
       ))
   ));
 
-  redirectAddRegion$ = createEffect(() => this.actions$.pipe(
-    ofType(regionsAction.addRegionSuccess),
-    map(response => {
-      this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+  updateRegion$ = createEffect(() => this.actions$.pipe(
+    ofType(regionsAction.updateRegion),
+    switchMap(action => this.regionService.updateRegion(action.region)
+    .pipe(
+      map((response: any) => {
+        this.toaster.success(response.msg);
+        const regionUpdate: Update<Region> = {
+          id: action.region.id,
+          changes: {
+            ...action.region
+          }
+        };
+        return regionsAction.updateRegionSuccess({region: regionUpdate});
+      }),
+      catchError(error => of(regionsAction.updateRegionFailure({error})))
+    ) )
+  ));
+
+  redirectAddUpdateRegion$ = createEffect(() => this.actions$.pipe(
+    ofType(...[regionsAction.addRegionSuccess, regionsAction.updateRegionSuccess]),
+    map( () => {
+      this.router.navigate(['regions']);
     })
   ), { dispatch: false });
+
+  // redirectUpdateRegion$ = createEffect(() => this.actions$.pipe(
+  //   ofType(regionsAction.updateRegionSuccess),
+  //   map( () => {
+  //     this.router.navigate(['regions']);
+  //   })
+  // ), { dispatch: false });
 
   deleteRegion$ = createEffect(() => this.actions$.pipe(
     ofType(regionsAction.deleteRegion),

@@ -13,4 +13,11 @@ export interface Region {
       }
   ],
   placeId?: string;
+  regionImage?: [
+    {
+        baseURL: string;
+        path:  string;
+        pathURL: string;
+    }
+];
 }

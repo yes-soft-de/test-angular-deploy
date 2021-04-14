@@ -1,5 +1,95 @@
+@import '../../../../../variable';
+
+.location-search-result {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    ul {
+        li {
+            cursor: pointer;
+            &:hover {
+                -webkit-transition: all .5s ease;
+                -moz-transition: all .5s ease;
+                -o-transition: all .5s ease;
+                transition: all .5s ease;
+                // background: $light_blue;
+                background: rgba(54, 72, 94, 0.92);
+                color: #fff;
+                border-radius: 5px;
+                padding-left: 10px;
+            }    
+        }
+    }
+    .lds-ring {
+        display: block;
+        position: inherit;
+        width: 64px;
+        height: 64px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 .card-footer {
     .btn.bg-sidebar-item-button {
         &:hover { background: rgba(54, 72, 94, 0.8); }
     }
 }
+
+.input-group-ar {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+    & > .custom-file {
+      position: relative;
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 1%;
+      margin-bottom: 0;
+      .custom-file-input {
+        width: 100%;
+        min-width: 14rem;
+        max-width: 100%;
+        height: calc(2.25rem + 2px);
+        margin: 0;
+        opacity: 0;
+      }
+      .custom-file-label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        &:after {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          z-index: 3;
+          display: block;
+          height: calc(calc(2.25rem + 2px) - 1px * 2);
+          padding: 0.375rem 0.75rem;
+          line-height: 1.5;
+          color: #495057;
+          content: "Browse";
+          background-color: #e9ecef;
+          border-left: 1px solid #ced4da;
+          border-radius: 0.25rem 0 0 0.25rem;
+        }
+      }
+    }
+  }
+  

@@ -31,7 +31,7 @@
         <td>{{'city' | translate }}</td>
         <td>{{'arrive-date' | translate }}</td>
         <td>{{'leave-date' | translate }}</td>
-        <td>{{'status' | translate }}</td>
+        <!-- <td>{{'status' | translate }}</td> -->
         <td>{{'cost' | translate }}</td>
         <td>{{'date' | translate }}</td>
       </tr>
@@ -45,7 +45,7 @@
         <td>{{order?.order ? order?.order?.city : '-'}}</td>
         <td>{{order?.order ? (order?.order?.arriveDate?.timestamp * 1000 | date: 'yyyy-MM-dd') : '-'}}</td>
         <td>{{order?.order ? (order?.order?.leaveDate?.timestamp * 1000 | date: 'yyyy-MM-dd') : '-'}}</td>
-        <td>{{order?.order ? order?.order?.status : '-'}}</td>
+        <!-- <td>{{order?.order ? order?.order?.status : '-'}}</td> -->
         <td>{{order?.cost ? order?.cost : '-'}}</td>
         <td style="white-space: nowrap;">{{order?.date ? (order?.date.timestamp * 1000 | date: 'yyyy-MM-dd') : '-'}}</td>
       </tr>

@@ -28,16 +28,16 @@
                     <td>{{'image' | translate}}</td>
                     <td>{{'name' | translate}}</td>
                     <td>{{'description' | translate}}</td>
-                    <td>{{'location' | translate}}</td>
+                    <!-- <td>{{'location' | translate}}</td> -->
                     <td>{{'comment-number' | translate}}</td>
                     <td>{{'rating-average' | translate}}</td>
                     <td>{{'control' | translate}}</td>
                 </tr>
                 <tr *ngFor="let region of regionsList | paginate: config">
-                  <td><img src="{{region?.path[0].path}}" alt="{{region.name}} Image" class="img-thumbnail img-custom"></td>
+                  <td><img src="{{region?.path[0]?.path}}" alt="{{region.name}} Image" class="img-thumbnail img-custom"></td>
                   <td>{{region.name ? region.name : '-'}}</td>
                   <td class="td-custom">{{region.description ? region.description : '-'}}</td>
-                  <td>{{region.location ? region.location : '-'}}</td>
+                  <!-- <td>{{region.location ? region.location : '-'}}</td> -->
                   <td>{{region.commentNumber ? region.commentNumber : '-'}}</td>
                   <td>{{region.ratingAverage ? region.ratingAverage : '-'}}</td>
                   <!-- <td>
