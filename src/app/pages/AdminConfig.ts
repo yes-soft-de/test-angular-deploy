@@ -39,7 +39,7 @@ export class AdminConfig {
   public static allAcceptedOrdersAPI        = AdminConfig.sourceAPI + 'acceptedordersbystatus';
 
   // Google Map
-  public static googleMapTokenAPI           = AdminConfig.sourceAPI + 'maphelper';
+  public static googleMapTokenAPI           = AdminConfig.sourceAPI + environment.googleTokenAPI;
   public static googleMapSearchAPI          = 'https://maps.googleapis.com/maps/api/place/autocomplete/';
   public static googleMapPlaceDetailsAPI    = 'https://maps.googleapis.com/maps/api/place/details/';
 
