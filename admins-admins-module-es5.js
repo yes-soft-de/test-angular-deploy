@@ -641,14 +641,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   return email;
                 }
               }
-
-              if (res.phoneNumber) {
-                var phoneNumber = res.phoneNumber.toString().toLocaleLowerCase().match(_this2.name.toLocaleLowerCase());
-
-                if (phoneNumber) {
-                  return phoneNumber;
-                }
-              }
             });
           }
         }
@@ -897,7 +889,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this3 = this;
 
           this.router.events.subscribe(function (route) {
-            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivationEnd"]) {
+            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["NavigationEnd"] && route.urlAfterRedirects == '/admins/add') {
               _this3.checkCurrentLang();
             }
           });
@@ -978,26 +970,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "checkCurrentLang",
         value: function checkCurrentLang() {
-          if (this.translate.currentLang && this.translate.currentLang == 'ar') {
-            console.log('current lang : ', this.translate.currentLang);
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-          } else {
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-          }
-        }
-      }, {
-        key: "checkLangChange",
-        value: function checkLangChange() {
           var _this5 = this;
 
-          this.translate.onLangChange.subscribe(function (lang) {
-            console.log('lang change to : ', lang);
+          var timer = 0;
+          var runTwoTime = setInterval(function () {
+            timer++;
 
-            if ((lang === null || lang === void 0 ? void 0 : lang.lang) && (lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
-              console.log('lang : ', lang === null || lang === void 0 ? void 0 : lang.lang);
-
+            if (_this5.translate.currentLang == 'ar') {
               _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
               _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
@@ -1005,6 +984,27 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
               _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+
+            if (timer == 2) {
+              clearInterval(runTwoTime);
+            }
+          }, 200);
+        }
+      }, {
+        key: "checkLangChange",
+        value: function checkLangChange() {
+          var _this6 = this;
+
+          this.translate.onLangChange.subscribe(function (lang) {
+            if ((lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
+              _this6.render.removeClass(_this6.document.querySelector('.input-group-custom'), 'input-group');
+
+              _this6.render.addClass(_this6.document.querySelector('.input-group-custom'), 'input-group-ar');
+            } else {
+              _this6.render.addClass(_this6.document.querySelector('.input-group-custom'), 'input-group');
+
+              _this6.render.removeClass(_this6.document.querySelector('.input-group-custom'), 'input-group-ar');
             }
           });
         }
@@ -1595,7 +1595,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/ngx-toastr/__ivy_ngcc__/fesm2015/ngx-toastr.js");
 
     var AdminEffects = function AdminEffects(actions$, adminService, router, activatedRoute, toaster) {
-      var _this6 = this;
+      var _this7 = this;
 
       _classCallCheck(this, AdminEffects);
 
@@ -1605,8 +1605,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.activatedRoute = activatedRoute;
       this.toaster = toaster;
       this.loadAdmins$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdmins"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
-          return _this6.adminService.getAdmins().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this7.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdmins"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
+          return _this7.adminService.getAdmins().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdminsSuccess"](response);
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdminsFailure"]({
@@ -1616,9 +1616,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }));
       });
       this.addAdmin$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
-          return _this6.adminService.newAdmin(action.admin).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
-            _this6.toaster.success(response.msg);
+        return _this7.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
+          return _this7.adminService.newAdmin(action.admin).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            _this7.toaster.success(response.msg);
 
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]();
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
@@ -1629,18 +1629,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }));
       });
       this.redirectAfterAdd$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
-          return _this6.router.navigate(['admins']);
+        return _this7.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
+          return _this7.router.navigate(['admins']);
         }));
       }, {
         dispatch: false
       });
       this.deleteAdmin$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
-          return _this6.adminService.deleteAdmin(action.userID).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this7.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
+          return _this7.adminService.deleteAdmin(action.userID).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             console.log('effect res : ', response);
 
-            _this6.toaster.success(response.msg);
+            _this7.toaster.success(response.msg);
 
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdminSuccess"]({
               userID: action.userID

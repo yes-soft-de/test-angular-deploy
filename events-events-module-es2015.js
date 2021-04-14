@@ -621,6 +621,7 @@ class EditEventComponent {
     // fill update form inputs
     fillingForm(data) {
         this.editEventForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.id),
             name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.name),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.description),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.location),
@@ -638,13 +639,8 @@ class EditEventComponent {
         }
         // Fetch All Form Data On Json Type
         const formObject = this.editEventForm.getRawValue();
-        formObject.id = this.eventDetails.id;
         console.log(formObject);
-        // const update: Update<Events> = {
-        //   id: this.eventDetails.id,
-        //   changes: this.editEventForm.getRawValue()
-        // }
-        this.store.dispatch(Object(_store_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEvent"])({ event: formObject }));
+        this.store.dispatch(Object(_store_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEvent"])({ Data: formObject }));
         // this.isSubmited = false;
     }
     ngOnDestroy() {
@@ -1203,14 +1199,21 @@ class EventEffects {
             this.router.navigate(['../'], { relativeTo: this.activatedRoute });
             return _event_actions__WEBPACK_IMPORTED_MODULE_4__["addEventSuccess"]({ Data: response.Data, msg: response.msg });
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["addEventFailure"]({ error })))))));
-        this.updateEvent$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(() => this.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEvent"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(action => this.eventService.updateEvent(action.event)
+        this.updateEvent$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(() => this.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEvent"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(action => this.eventService.updateEvent(action.Data)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(response => {
             this.toaster.success(response.msg);
-            return _event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventSuccess"]({ Data: response.Data, msg: response.msg });
+            const updateEvent = {
+                id: action.Data.id,
+                changes: Object.assign({}, action.Data)
+            };
+            return _event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventSuccess"]({ event: updateEvent });
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(error => {
             console.log('error update effect :', error);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventFailure"](error));
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(() => this.router.navigate(['events']))))), { dispatch: false });
+        })))));
+        this.redirectAddUpdateEvent$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(() => this.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(() => {
+            this.router.navigate(['events']);
+        })), { dispatch: false });
     }
 }
 EventEffects.ɵfac = function EventEffects_Factory(t) { return new (t || EventEffects)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["Actions"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_services_events_service__WEBPACK_IMPORTED_MODULE_5__["EventsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"])); };
@@ -1261,7 +1264,7 @@ const reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createReducer"]
     return Object.assign(Object.assign({}, state), { error: action.error });
 }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["addEventSuccess"], (state, action) => adapter.addOne(action.Data, state)), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["addEventFailure"], (state, action) => {
     return Object.assign(Object.assign({}, state), { error: action.error });
-}), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEvent"], (state, action) => adapter.updateOne(action.event, state)));
+}), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEventSuccess"], (state, action) => adapter.updateOne(action.event, state)));
 const { selectIds, selectEntities, selectAll, selectTotal, } = adapter.getSelectors();
 
 

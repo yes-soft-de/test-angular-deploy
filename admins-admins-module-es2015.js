@@ -306,12 +306,6 @@ class AllAdminsComponent {
                         return email;
                     }
                 }
-                if (res.phoneNumber) {
-                    const phoneNumber = res.phoneNumber.toString().toLocaleLowerCase().match(this.name.toLocaleLowerCase());
-                    if (phoneNumber) {
-                        return phoneNumber;
-                    }
-                }
             });
         }
     }
@@ -431,7 +425,7 @@ class NewAdminComponent {
     }
     ngOnInit() {
         this.router.events.subscribe(route => {
-            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivationEnd"]) {
+            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["NavigationEnd"] && route.urlAfterRedirects == '/admins/add') {
                 this.checkCurrentLang();
             }
         });
@@ -492,21 +486,25 @@ class NewAdminComponent {
         this.store.dispatch(Object(_store_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdmin"])({ admin: formObject }));
     }
     checkCurrentLang() {
-        if (this.translate.currentLang && this.translate.currentLang == 'ar') {
-            console.log('current lang : ', this.translate.currentLang);
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-        }
-        else {
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-        }
+        let timer = 0;
+        const runTwoTime = setInterval(() => {
+            timer++;
+            if (this.translate.currentLang == 'ar') {
+                this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
+                this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+            else {
+                this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
+                this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+            if (timer == 2) {
+                clearInterval(runTwoTime);
+            }
+        }, 200);
     }
     checkLangChange() {
         this.translate.onLangChange.subscribe(lang => {
-            console.log('lang change to : ', lang);
-            if ((lang === null || lang === void 0 ? void 0 : lang.lang) && (lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
-                console.log('lang : ', lang === null || lang === void 0 ? void 0 : lang.lang);
+            if ((lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
                 this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
                 this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
             }

@@ -269,7 +269,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var _this = this;
 
           this.router.events.subscribe(function (route) {
-            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivationEnd"]) {
+            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"] && route.urlAfterRedirects == '/regions/add') {
               _this.checkCurrentLang();
             }
           }); // Fetch Form Data
@@ -278,32 +278,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
             path: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
           });
           this.checkLangChange();
-          /*
-          this.mapsAPILoader.load().then(() => {
-            this.setCurrentLocation();
-            this.geoCoder = new google.maps.Geocoder;
-            
-            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
-            autocomplete.addListener("place_changed", () => {
-              this.ngZone.run(() => {
-                let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-                
-                if (place.geometry === undefined || place.geometry === null) {
-                  return;
-                }
-                
-                this.latitude = place.geometry.location.lat();
-                this.longitude = place.geometry.location.lng();
-                this.zoom = 12;
-              });
-            });
-          });
-          */
-
           this.getGoogleMapToken();
         } // Get Google Map Token
 
@@ -328,9 +306,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(function (data) {
               if (data) {
                 _this3.googleLocationsNameList = data.predictions;
-                console.log('search data : ', _this3.googleLocationsNameList);
               }
             });
+
+            if (event.target.value == '') {
+              this.showSearchResult = false;
+            }
           } else {
             this.toaster.error('Error Google Map Searching, Please Try Later');
           }
@@ -398,26 +379,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "checkCurrentLang",
         value: function checkCurrentLang() {
-          if (this.translate.currentLang && this.translate.currentLang == 'ar') {
-            console.log('current lang : ', this.translate.currentLang);
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-          } else {
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-          }
-        }
-      }, {
-        key: "checkLangChange",
-        value: function checkLangChange() {
           var _this5 = this;
 
-          this.translate.onLangChange.subscribe(function (lang) {
-            console.log('lang change to : ', lang);
+          var timer = 0;
+          var runTwoTime = setInterval(function () {
+            timer++;
 
-            if ((lang === null || lang === void 0 ? void 0 : lang.lang) && (lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
-              console.log('lang : ', lang === null || lang === void 0 ? void 0 : lang.lang);
-
+            if (_this5.translate.currentLang == 'ar') {
               _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
               _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
@@ -425,6 +393,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
               _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+
+            if (timer == 2) {
+              clearInterval(runTwoTime);
+            }
+          }, 200);
+        }
+      }, {
+        key: "checkLangChange",
+        value: function checkLangChange() {
+          var _this6 = this;
+
+          this.translate.onLangChange.subscribe(function (lang) {
+            if ((lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
+              _this6.render.removeClass(_this6.document.querySelector('.input-group-custom'), 'input-group');
+
+              _this6.render.addClass(_this6.document.querySelector('.input-group-custom'), 'input-group-ar');
+            } else {
+              _this6.render.addClass(_this6.document.querySelector('.input-group-custom'), 'input-group');
+
+              _this6.render.removeClass(_this6.document.querySelector('.input-group-custom'), 'input-group-ar');
             }
           });
         }
@@ -470,7 +459,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       },
       decls: 47,
       vars: 42,
-      consts: [[1, "container-fluid"], [1, "content-header"], [1, "text-center", "my-5"], [1, "card", "card-info"], [1, "card-header", "bg-sidebar-item-button", "text-white"], [1, "card-title", "mb-0"], [3, "formGroup", "ngSubmit"], [1, "card-body"], [1, "form-group"], ["for", "inputNameSuccess", 1, "col-form-label"], ["type", "text", "name", "name", "formControlName", "name", "id", "inputNameSuccess", 1, "form-control", 3, "ngClass", "placeholder", "keydown"], ["class", "location-search-result px-3 py-2", 4, "ngIf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "exampleInputdescription1"], ["name", "description", "formControlName", "description", "id", "exampleInputdescription1", 1, "form-control", 3, "ngClass", "placeholder"], ["for", "exampleInputupload"], [1, "input-group", "input-group-custom"], [1, "custom-file"], ["type", "file", "accept", "image/*", "id", "file-input", 1, "custom-file-input", 3, "change"], ["imageInput", ""], ["for", "file-input", 1, "custom-file-label"], [1, "input-group-append"], ["type", "button", 1, "btn", "btn-success", 3, "disabled", "click"], [1, "card-footer"], ["type", "submit", 1, "btn", "bg-sidebar-item-button", "text-white", 3, "disabled"], [1, "location-search-result", "px-3", "py-2"], ["class", "list-unstyled mb-0", 4, "ngIf"], ["class", "lds-ring", 4, "ngIf"], [1, "list-unstyled", "mb-0"], ["class", "pb-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "pb-1", 3, "click"], [1, "lds-ring"], [1, "invalid-feedback"]],
+      consts: [[1, "container-fluid"], [1, "content-header"], [1, "text-center", "my-5"], [1, "card", "card-info"], [1, "card-header", "bg-sidebar-item-button", "text-white"], [1, "card-title", "mb-0"], [3, "formGroup", "ngSubmit"], [1, "card-body"], [1, "form-group"], ["for", "inputNameSuccess", 1, "col-form-label"], ["type", "text", "name", "name", "formControlName", "name", "id", "inputNameSuccess", "autocomplete", "off", 1, "form-control", 3, "ngClass", "placeholder", "keydown"], ["class", "location-search-result px-3 py-2", 4, "ngIf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "exampleInputdescription1"], ["name", "description", "formControlName", "description", "id", "exampleInputdescription1", 1, "form-control", 3, "ngClass", "placeholder"], ["for", "exampleInputupload"], [1, "input-group", "input-group-custom"], [1, "custom-file"], ["type", "file", "accept", "image/*", "id", "file-input", 1, "custom-file-input", 3, "change"], ["imageInput", ""], ["for", "file-input", 1, "custom-file-label"], [1, "input-group-append"], ["type", "button", 1, "btn", "btn-success", 3, "disabled", "click"], [1, "card-footer"], ["type", "submit", 1, "btn", "bg-sidebar-item-button", "text-white", 3, "disabled"], [1, "location-search-result", "px-3", "py-2"], ["class", "list-unstyled mb-0", 4, "ngIf"], ["class", "lds-ring", 4, "ngIf"], [1, "list-unstyled", "mb-0"], ["class", "pb-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "pb-1", 3, "click"], [1, "lds-ring"], [1, "invalid-feedback"]],
       template: function AddRegionComponent_Template(rf, ctx) {
         if (rf & 1) {
           var _r10 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
@@ -1167,12 +1156,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getAllRegions",
         value: function getAllRegions() {
-          var _this6 = this;
+          var _this7 = this;
 
           this.regionsSubscription = this.store.select(_store_region_selector__WEBPACK_IMPORTED_MODULE_2__["getAllRegionsSelector"]).subscribe(function (data) {
             console.log(data);
-            _this6.regions = data;
-            _this6.regionsList = data;
+            _this7.regions = data;
+            _this7.regionsList = data;
           });
           this.config = {
             itemsPerPage: 5,
@@ -1189,7 +1178,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "delete",
         value: function _delete(regionId) {
-          var _this7 = this;
+          var _this8 = this;
 
           if (confirm('Are You Sure You Want To Delete This Region')) {
             this.isDeleted = true;
@@ -1198,7 +1187,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             })); // this.toaster.success('Region Successfully Deleted');
 
             setTimeout(function () {
-              _this7.isDeleted = false;
+              _this8.isDeleted = false;
             }, 1000);
           } else {
             return false;
@@ -1207,7 +1196,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "applyFilter",
         value: function applyFilter() {
-          var _this8 = this;
+          var _this9 = this;
 
           // if the search input value is empty
           if (!this.name) {
@@ -1216,7 +1205,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.regionsList = [];
             this.regionsList = this.regions.filter(function (res) {
               if (res.name) {
-                var name = res.name.toLocaleLowerCase().match(_this8.name.toLocaleLowerCase());
+                var name = res.name.toLocaleLowerCase().match(_this9.name.toLocaleLowerCase());
 
                 if (name) {
                   // display the Name Column
@@ -1543,12 +1532,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(EditRegionComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this9 = this;
+          var _this10 = this;
 
           this.activatedRoute.paramMap.subscribe(function (params) {
             var regionId = params.get('id');
 
-            _this9.store.dispatch(Object(_store_region_actions__WEBPACK_IMPORTED_MODULE_5__["loadRegion"])({
+            _this10.store.dispatch(Object(_store_region_actions__WEBPACK_IMPORTED_MODULE_5__["loadRegion"])({
               id: +regionId
             }));
           }); // Init Form Inputs
@@ -1558,7 +1547,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             path: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
+            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required)
           });
           this.checkLangChange(); // Check CHange Languages
 
@@ -1570,24 +1559,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getGoogleMapToken",
         value: function getGoogleMapToken() {
-          var _this10 = this;
+          var _this11 = this;
 
           this.regionService.getGoogleMapToken().subscribe(function (token) {
-            return _this10.googleMapToken = token.Data;
+            return _this11.googleMapToken = token.Data;
           });
         } // Get Region Details
 
       }, {
         key: "getRegion",
         value: function getRegion() {
-          var _this11 = this;
+          var _this12 = this;
 
           this.store.select(_store_region_selector__WEBPACK_IMPORTED_MODULE_6__["getRegionSelector"]).subscribe(function (data) {
             if (data) {
-              _this11.regionData = data;
+              _this12.regionData = data;
               console.log('data detail: ', data);
 
-              _this11.fillForms(data);
+              _this12.fillForms(data);
             }
           });
         } // Fill Form Inputs With Region Data
@@ -1608,14 +1597,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchLocation",
         value: function searchLocation(event) {
-          var _this12 = this;
+          var _this13 = this;
 
           this.showSearchResult = true;
           var value = Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(event.target.value.trim());
           this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(function (data) {
             if (data) {
-              _this12.googleLocationsNameList = data.predictions;
-              console.log('search data : ', _this12.googleLocationsNameList); // this.showSearchResult = false;
+              _this13.googleLocationsNameList = data.predictions;
+              console.log('search data : ', _this13.googleLocationsNameList); // this.showSearchResult = false;
             }
           });
         } // Fill Form Inputs With New Google Map Locations
@@ -1644,7 +1633,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "checkLangChange",
         value: function checkLangChange() {
-          var _this13 = this;
+          var _this14 = this;
 
           this.translate.onLangChange.subscribe(function (lang) {
             console.log('lang change to : ', lang);
@@ -1652,13 +1641,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             if (lang.lang == 'ar') {
               console.log('lang : ', lang.lang);
 
-              _this13.render.removeClass(_this13.document.querySelector('.input-group-custom'), 'input-group');
+              _this14.render.removeClass(_this14.document.querySelector('.input-group-custom'), 'input-group');
 
-              _this13.render.addClass(_this13.document.querySelector('.input-group-custom'), 'input-group-ar');
+              _this14.render.addClass(_this14.document.querySelector('.input-group-custom'), 'input-group-ar');
             } else {
-              _this13.render.addClass(_this13.document.querySelector('.input-group-custom'), 'input-group');
+              _this14.render.addClass(_this14.document.querySelector('.input-group-custom'), 'input-group');
 
-              _this13.render.removeClass(_this13.document.querySelector('.input-group-custom'), 'input-group-ar');
+              _this14.render.removeClass(_this14.document.querySelector('.input-group-custom'), 'input-group-ar');
             }
           });
         }
@@ -1673,7 +1662,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "processFile",
         value: function processFile(imageInput) {
-          var _this14 = this;
+          var _this15 = this;
 
           this.fileSelected = false;
           this.uploadButtonValue = 'Uploading...';
@@ -1682,21 +1671,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var file = imageInput.files[0];
           var reader = new FileReader();
           reader.addEventListener('load', function (event) {
-            _this14.selectedFile = new src_app_theme_model_image_snippet__WEBPACK_IMPORTED_MODULE_4__["ImageSnippet"](event.target.result, file);
+            _this15.selectedFile = new src_app_theme_model_image_snippet__WEBPACK_IMPORTED_MODULE_4__["ImageSnippet"](event.target.result, file);
 
-            _this14.regionService.uploadImage(_this14.selectedFile.file).subscribe(function (res) {
+            _this15.regionService.uploadImage(_this15.selectedFile.file).subscribe(function (res) {
               console.log(res);
-              _this14.imageUrl = res;
-              _this14.uploadButtonValue = 'uploaded';
-              _this14.imagePathReady = true;
-              _this14.imageUploaded = false;
-              _this14.submitButtonValue = 'update';
+              _this15.imageUrl = res;
+              _this15.uploadButtonValue = 'uploaded';
+              _this15.imagePathReady = true;
+              _this15.imageUploaded = false;
+              _this15.submitButtonValue = 'update';
             }, function (err) {
-              _this14.uploadButtonValue = 'upload';
-              _this14.fileSelected = true;
-              _this14.imageUploaded = false;
+              _this15.uploadButtonValue = 'upload';
+              _this15.fileSelected = true;
+              _this15.imageUploaded = false;
 
-              _this14.toaster.error('Network Error, Please Try After a Few Seconds');
+              _this15.toaster.error('Network Error, Please Try After a Few Seconds');
 
               console.log(err);
             });
@@ -2348,7 +2337,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "searchLocationAutoComplete",
         value: function searchLocationAutoComplete(text$, token) {
-          var _this15 = this;
+          var _this16 = this;
 
           return text$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(500), // Wait 500 Millsecond before execute The rest
           Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["distinctUntilChanged"])(), // stop make search until the searching value is changing 
@@ -2357,7 +2346,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               return [];
             }
 
-            return _this15.search(searchTerm, token);
+            return _this16.search(searchTerm, token);
           }));
         } // Image Section - Upload Image
 
@@ -2647,7 +2636,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     "./src/app/pages/regions/services/regions.service.ts");
 
     var RegionEffects = function RegionEffects(actions$, store, toaster, router, activatedRoute, regionService) {
-      var _this16 = this;
+      var _this17 = this;
 
       _classCallCheck(this, RegionEffects);
 
@@ -2658,17 +2647,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.activatedRoute = activatedRoute;
       this.regionService = regionService;
       this.loadRegions$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegions"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
-          return _this16.regionService.getAllRegions().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegions"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
+          return _this17.regionService.getAllRegions().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             // this.store.dispatch(setLoadSpinner({status: false}));
             return _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegionsSuccess"](response);
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             console.log('error effect: ', error);
 
             if (error.error.error) {
-              _this16.toaster.error(error.error.error);
+              _this17.toaster.error(error.error.error);
             } else if (error.error.msg) {
-              _this16.toaster.error(error.error.msg);
+              _this17.toaster.error(error.error.msg);
             }
 
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegionsFailure"](error));
@@ -2676,8 +2665,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }));
       });
       this.loadRegion$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
-          return _this16.regionService.getRegion(action.id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
+          return _this17.regionService.getRegion(action.id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             return _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["loadRegionSuccess"]({
               region: response.Data
             });
@@ -2690,9 +2679,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }));
       });
       this.addRegion$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["addRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
-          return _this16.regionService.createRegion(action.region).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
-            _this16.toaster.success(response === null || response === void 0 ? void 0 : response.msg);
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["addRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
+          return _this17.regionService.createRegion(action.region).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            _this17.toaster.success(response === null || response === void 0 ? void 0 : response.msg);
 
             return _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["addRegionSuccess"]();
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
@@ -2704,9 +2693,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }));
       });
       this.updateRegion$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["updateRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (action) {
-          return _this16.regionService.updateRegion(action.region).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
-            _this16.toaster.success(response.msg);
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["updateRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (action) {
+          return _this17.regionService.updateRegion(action.region).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            _this17.toaster.success(response.msg);
 
             var regionUpdate = {
               id: action.region.id,
@@ -2723,8 +2712,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }));
       });
       this.redirectAddUpdateRegion$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"]).apply(void 0, [_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["addRegionSuccess"], _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["updateRegionSuccess"]]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function () {
-          _this16.router.navigate(['regions']);
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"]).apply(void 0, [_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["addRegionSuccess"], _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["updateRegionSuccess"]]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function () {
+          _this17.router.navigate(['regions']);
         }));
       }, {
         dispatch: false
@@ -2736,11 +2725,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       // ), { dispatch: false });
 
       this.deleteRegion$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this16.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["deleteRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
-          return _this16.regionService.deleteRegion(action.id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this17.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_store_region_actions__WEBPACK_IMPORTED_MODULE_4__["deleteRegion"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
+          return _this17.regionService.deleteRegion(action.id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             console.log(response);
 
-            _this16.toaster.success('Region Successfully Deleted');
+            _this17.toaster.success('Region Successfully Deleted');
 
             return _store_region_actions__WEBPACK_IMPORTED_MODULE_4__["deleteRegionSuccess"]();
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {

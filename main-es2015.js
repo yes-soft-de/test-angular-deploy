@@ -2169,8 +2169,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/__ivy_ngcc__/fesm2015/store.js");
 /* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngrx/store-devtools */ "./node_modules/@ngrx/store-devtools/__ivy_ngcc__/fesm2015/ngrx-store-devtools.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/__ivy_ngcc__/fesm2015/ngrx-effects.js");
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./@theme/store/app-state */ "./src/app/@theme/store/app-state.ts");
+/* harmony import */ var _theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./@theme/store/app-state */ "./src/app/@theme/store/app-state.ts");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! src/environments/environment.prod */ "./src/environments/environment.prod.ts");
 
 
 
@@ -2201,16 +2201,7 @@ function HttpLoaderFactory(http) {
     return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http);
 }
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyDOAu8tqavfWnEit8vuOr7JyxRt2XHjEcs",
-    authDomain: "yes-soft-6866a.firebaseapp.com",
-    databaseURL: "https://yes-soft-6866a.firebaseio.com",
-    projectId: "yes-soft-6866a",
-    storageBucket: "yes-soft-6866a.appspot.com",
-    messagingSenderId: "396882908080",
-    appId: "1:396882908080:web:e86f986ae56c6070fabc75",
-    measurementId: "G-HPC10T199F"
-};
+const firebaseConfig = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].firebaseConfig;
 class AppModule {
 }
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]] });
@@ -2220,8 +2211,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
             ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(),
             _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(),
-            _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__["appReducer"], {}),
-            _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({ maxAge: 25, logOnly: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].production }),
+            _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__["appReducer"], {}),
+            _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({ maxAge: 25, logOnly: src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].production }),
             _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__["EffectsModule"].forRoot([]),
             _angular_fire__WEBPACK_IMPORTED_MODULE_7__["AngularFireModule"].initializeApp(firebaseConfig),
             _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestoreModule"],
@@ -2250,8 +2241,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                     ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(),
                     _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(),
-                    _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__["appReducer"], {}),
-                    _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({ maxAge: 25, logOnly: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].production }),
+                    _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__["appReducer"], {}),
+                    _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({ maxAge: 25, logOnly: src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].production }),
                     _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__["EffectsModule"].forRoot([]),
                     _angular_fire__WEBPACK_IMPORTED_MODULE_7__["AngularFireModule"].initializeApp(firebaseConfig),
                     _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestoreModule"],
@@ -2283,13 +2274,12 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminConfig", function() { return AdminConfig; });
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment.prod */ "./src/environments/environment.prod.ts");
+
 class AdminConfig {
 }
-// An Example | Delete The Content When Started
 // source api
-// public static sourceAPI                   = 'http://turkey-app.yes-cloud.de/html/public/index.php/';0
-AdminConfig.sourceAPI = 'http://tourist.yes-cloud.de/html/public/index.php/';
-// public static sourceAPI                   = 'http://localhost:8000/';
+AdminConfig.sourceAPI = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__["environment"].sourceAPI;
 // Login
 AdminConfig.loginAPI = AdminConfig.sourceAPI + 'login_check';
 // Dashboard
@@ -2313,7 +2303,7 @@ AdminConfig.updateGuideAPI = AdminConfig.sourceAPI + 'guidbyadminupdate';
 AdminConfig.allUnacceptedOrdersAPI = AdminConfig.sourceAPI + 'allunacceptedorders';
 AdminConfig.allAcceptedOrdersAPI = AdminConfig.sourceAPI + 'acceptedordersbystatus';
 // Google Map
-AdminConfig.googleMapTokenAPI = AdminConfig.sourceAPI + 'maphelper';
+AdminConfig.googleMapTokenAPI = AdminConfig.sourceAPI + src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__["environment"].googleTokenAPI;
 AdminConfig.googleMapSearchAPI = 'https://maps.googleapis.com/maps/api/place/autocomplete/';
 AdminConfig.googleMapPlaceDetailsAPI = 'https://maps.googleapis.com/maps/api/place/details/';
 // Upload
@@ -2471,6 +2461,36 @@ const SIDEBAR_MENU_ITEM = [
         link: '/guides',
     }
 ];
+
+
+/***/ }),
+
+/***/ "./src/environments/environment.prod.ts":
+/*!**********************************************!*\
+  !*** ./src/environments/environment.prod.ts ***!
+  \**********************************************/
+/*! exports provided: environment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+const environment = {
+    production: true,
+    googleMapTokenKey: '',
+    sourceAPI: 'http://tourist.yes-cloud.de/html/public/index.php/',
+    googleTokenAPI: 'maphelper',
+    firebaseConfig: {
+        apiKey: "AIzaSyDOAu8tqavfWnEit8vuOr7JyxRt2XHjEcs",
+        authDomain: "yes-soft-6866a.firebaseapp.com",
+        databaseURL: "https://yes-soft-6866a.firebaseio.com",
+        projectId: "yes-soft-6866a",
+        storageBucket: "yes-soft-6866a.appspot.com",
+        messagingSenderId: "396882908080",
+        appId: "1:396882908080:web:e86f986ae56c6070fabc75",
+        measurementId: "G-HPC10T199F"
+    }
+};
 
 
 /***/ }),

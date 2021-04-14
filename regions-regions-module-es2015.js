@@ -124,7 +124,7 @@ class AddRegionComponent {
     }
     ngOnInit() {
         this.router.events.subscribe(route => {
-            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivationEnd"]) {
+            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"] && route.urlAfterRedirects == '/regions/add') {
                 this.checkCurrentLang();
             }
         });
@@ -133,31 +133,10 @@ class AddRegionComponent {
             name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
             path: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
         });
         this.checkLangChange();
-        /*
-        this.mapsAPILoader.load().then(() => {
-          this.setCurrentLocation();
-          this.geoCoder = new google.maps.Geocoder;
-          
-          let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
-          autocomplete.addListener("place_changed", () => {
-            this.ngZone.run(() => {
-              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-              
-              if (place.geometry === undefined || place.geometry === null) {
-                return;
-              }
-              
-              this.latitude = place.geometry.location.lat();
-              this.longitude = place.geometry.location.lng();
-              this.zoom = 12;
-            });
-          });
-        });
-        */
         this.getGoogleMapToken();
     }
     // Get Google Map Token
@@ -172,9 +151,11 @@ class AddRegionComponent {
             this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(data => {
                 if (data) {
                     this.googleLocationsNameList = data.predictions;
-                    console.log('search data : ', this.googleLocationsNameList);
                 }
             });
+            if (event.target.value == '') {
+                this.showSearchResult = false;
+            }
         }
         else {
             this.toaster.error('Error Google Map Searching, Please Try Later');
@@ -228,21 +209,25 @@ class AddRegionComponent {
         reader.readAsDataURL(file);
     }
     checkCurrentLang() {
-        if (this.translate.currentLang && this.translate.currentLang == 'ar') {
-            console.log('current lang : ', this.translate.currentLang);
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-        }
-        else {
-            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
-            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-        }
+        let timer = 0;
+        const runTwoTime = setInterval(() => {
+            timer++;
+            if (this.translate.currentLang == 'ar') {
+                this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
+                this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+            else {
+                this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
+                this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+            }
+            if (timer == 2) {
+                clearInterval(runTwoTime);
+            }
+        }, 200);
     }
     checkLangChange() {
         this.translate.onLangChange.subscribe(lang => {
-            console.log('lang change to : ', lang);
-            if ((lang === null || lang === void 0 ? void 0 : lang.lang) && (lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
-                console.log('lang : ', lang === null || lang === void 0 ? void 0 : lang.lang);
+            if ((lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
                 this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
                 this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
             }
@@ -271,7 +256,7 @@ AddRegionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefin
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.searchElementRef = _t.first);
-    } }, decls: 47, vars: 42, consts: [[1, "container-fluid"], [1, "content-header"], [1, "text-center", "my-5"], [1, "card", "card-info"], [1, "card-header", "bg-sidebar-item-button", "text-white"], [1, "card-title", "mb-0"], [3, "formGroup", "ngSubmit"], [1, "card-body"], [1, "form-group"], ["for", "inputNameSuccess", 1, "col-form-label"], ["type", "text", "name", "name", "formControlName", "name", "id", "inputNameSuccess", 1, "form-control", 3, "ngClass", "placeholder", "keydown"], ["class", "location-search-result px-3 py-2", 4, "ngIf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "exampleInputdescription1"], ["name", "description", "formControlName", "description", "id", "exampleInputdescription1", 1, "form-control", 3, "ngClass", "placeholder"], ["for", "exampleInputupload"], [1, "input-group", "input-group-custom"], [1, "custom-file"], ["type", "file", "accept", "image/*", "id", "file-input", 1, "custom-file-input", 3, "change"], ["imageInput", ""], ["for", "file-input", 1, "custom-file-label"], [1, "input-group-append"], ["type", "button", 1, "btn", "btn-success", 3, "disabled", "click"], [1, "card-footer"], ["type", "submit", 1, "btn", "bg-sidebar-item-button", "text-white", 3, "disabled"], [1, "location-search-result", "px-3", "py-2"], ["class", "list-unstyled mb-0", 4, "ngIf"], ["class", "lds-ring", 4, "ngIf"], [1, "list-unstyled", "mb-0"], ["class", "pb-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "pb-1", 3, "click"], [1, "lds-ring"], [1, "invalid-feedback"]], template: function AddRegionComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, decls: 47, vars: 42, consts: [[1, "container-fluid"], [1, "content-header"], [1, "text-center", "my-5"], [1, "card", "card-info"], [1, "card-header", "bg-sidebar-item-button", "text-white"], [1, "card-title", "mb-0"], [3, "formGroup", "ngSubmit"], [1, "card-body"], [1, "form-group"], ["for", "inputNameSuccess", 1, "col-form-label"], ["type", "text", "name", "name", "formControlName", "name", "id", "inputNameSuccess", "autocomplete", "off", 1, "form-control", 3, "ngClass", "placeholder", "keydown"], ["class", "location-search-result px-3 py-2", 4, "ngIf"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "exampleInputdescription1"], ["name", "description", "formControlName", "description", "id", "exampleInputdescription1", 1, "form-control", 3, "ngClass", "placeholder"], ["for", "exampleInputupload"], [1, "input-group", "input-group-custom"], [1, "custom-file"], ["type", "file", "accept", "image/*", "id", "file-input", 1, "custom-file-input", 3, "change"], ["imageInput", ""], ["for", "file-input", 1, "custom-file-label"], [1, "input-group-append"], ["type", "button", 1, "btn", "btn-success", 3, "disabled", "click"], [1, "card-footer"], ["type", "submit", 1, "btn", "bg-sidebar-item-button", "text-white", 3, "disabled"], [1, "location-search-result", "px-3", "py-2"], ["class", "list-unstyled mb-0", 4, "ngIf"], ["class", "lds-ring", 4, "ngIf"], [1, "list-unstyled", "mb-0"], ["class", "pb-1", 3, "click", 4, "ngFor", "ngForOf"], [1, "pb-1", 3, "click"], [1, "lds-ring"], [1, "invalid-feedback"]], template: function AddRegionComponent_Template(rf, ctx) { if (rf & 1) {
         const _r10 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
@@ -789,7 +774,7 @@ class EditRegionComponent {
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             path: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
-            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            placeId: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required),
         });
         this.checkLangChange(); // Check CHange Languages
         this.getRegion(); // Region Details

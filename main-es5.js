@@ -4195,31 +4195,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var src_environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
-    /*! src/environments/environment */
-    "./src/environments/environment.ts");
+    var _theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    /*! ./@theme/store/app-state */
+    "./src/app/@theme/store/app-state.ts");
     /* harmony import */
 
 
-    var _theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
-    /*! ./@theme/store/app-state */
-    "./src/app/@theme/store/app-state.ts");
+    var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    /*! src/environments/environment.prod */
+    "./src/environments/environment.prod.ts");
 
     function HttpLoaderFactory(http) {
       return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http);
     } // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 
-    var firebaseConfig = {
-      apiKey: "AIzaSyDOAu8tqavfWnEit8vuOr7JyxRt2XHjEcs",
-      authDomain: "yes-soft-6866a.firebaseapp.com",
-      databaseURL: "https://yes-soft-6866a.firebaseio.com",
-      projectId: "yes-soft-6866a",
-      storageBucket: "yes-soft-6866a.appspot.com",
-      messagingSenderId: "396882908080",
-      appId: "1:396882908080:web:e86f986ae56c6070fabc75",
-      measurementId: "G-HPC10T199F"
-    };
+    var firebaseConfig = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].firebaseConfig;
 
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
@@ -4234,9 +4225,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         return new (t || AppModule)();
       },
       providers: [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"]],
-      imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(), _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__["appReducer"], {}), _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({
+      imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(), _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__["appReducer"], {}), _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({
         maxAge: 25,
-        logOnly: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].production
+        logOnly: src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].production
       }), _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__["EffectsModule"].forRoot([]), _angular_fire__WEBPACK_IMPORTED_MODULE_7__["AngularFireModule"].initializeApp(firebaseConfig), _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestoreModule"], _angular_fire_database__WEBPACK_IMPORTED_MODULE_9__["AngularFireDatabaseModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"].forRoot({
         loader: {
           provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateLoader"],
@@ -4260,9 +4251,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
         args: [{
           declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
-          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(), _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__["appReducer"], {}), _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({
+          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(), _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"].forRoot(), _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreModule"].forRoot(_theme_store_app_state__WEBPACK_IMPORTED_MODULE_16__["appReducer"], {}), _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"].instrument({
             maxAge: 25,
-            logOnly: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].production
+            logOnly: src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_17__["environment"].production
           }), _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__["EffectsModule"].forRoot([]), _angular_fire__WEBPACK_IMPORTED_MODULE_7__["AngularFireModule"].initializeApp(firebaseConfig), _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestoreModule"], _angular_fire_database__WEBPACK_IMPORTED_MODULE_9__["AngularFireDatabaseModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"].forRoot({
             loader: {
               provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateLoader"],
@@ -4299,16 +4290,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     __webpack_require__.d(__webpack_exports__, "AdminConfig", function () {
       return AdminConfig;
     });
+    /* harmony import */
+
+
+    var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! src/environments/environment.prod */
+    "./src/environments/environment.prod.ts");
 
     var AdminConfig = function AdminConfig() {
       _classCallCheck(this, AdminConfig);
-    }; // An Example | Delete The Content When Started
-    // source api
-    // public static sourceAPI                   = 'http://turkey-app.yes-cloud.de/html/public/index.php/';0
+    }; // source api
 
 
-    AdminConfig.sourceAPI = 'http://tourist.yes-cloud.de/html/public/index.php/'; // public static sourceAPI                   = 'http://localhost:8000/';
-    // Login
+    AdminConfig.sourceAPI = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__["environment"].sourceAPI; // Login
 
     AdminConfig.loginAPI = AdminConfig.sourceAPI + 'login_check'; // Dashboard
 
@@ -4332,7 +4326,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     AdminConfig.allUnacceptedOrdersAPI = AdminConfig.sourceAPI + 'allunacceptedorders';
     AdminConfig.allAcceptedOrdersAPI = AdminConfig.sourceAPI + 'acceptedordersbystatus'; // Google Map
 
-    AdminConfig.googleMapTokenAPI = AdminConfig.sourceAPI + 'maphelper';
+    AdminConfig.googleMapTokenAPI = AdminConfig.sourceAPI + src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_0__["environment"].googleTokenAPI;
     AdminConfig.googleMapSearchAPI = 'https://maps.googleapis.com/maps/api/place/autocomplete/';
     AdminConfig.googleMapPlaceDetailsAPI = 'https://maps.googleapis.com/maps/api/place/details/'; // Upload
 
@@ -4567,6 +4561,45 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       icon: 'fa fa-user-circle',
       link: '/guides'
     }];
+    /***/
+  },
+
+  /***/
+  "./src/environments/environment.prod.ts":
+  /*!**********************************************!*\
+    !*** ./src/environments/environment.prod.ts ***!
+    \**********************************************/
+
+  /*! exports provided: environment */
+
+  /***/
+  function srcEnvironmentsEnvironmentProdTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "environment", function () {
+      return environment;
+    });
+
+    var environment = {
+      production: true,
+      googleMapTokenKey: '',
+      sourceAPI: 'http://tourist.yes-cloud.de/html/public/index.php/',
+      googleTokenAPI: 'maphelper',
+      firebaseConfig: {
+        apiKey: "AIzaSyDOAu8tqavfWnEit8vuOr7JyxRt2XHjEcs",
+        authDomain: "yes-soft-6866a.firebaseapp.com",
+        databaseURL: "https://yes-soft-6866a.firebaseio.com",
+        projectId: "yes-soft-6866a",
+        storageBucket: "yes-soft-6866a.appspot.com",
+        messagingSenderId: "396882908080",
+        appId: "1:396882908080:web:e86f986ae56c6070fabc75",
+        measurementId: "G-HPC10T199F"
+      }
+    };
     /***/
   },
 

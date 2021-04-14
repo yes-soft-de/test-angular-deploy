@@ -1261,6 +1261,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "fillingForm",
         value: function fillingForm(data) {
           this.editEventForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.id),
             name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.name),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.description),
             location: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](data.location),
@@ -1281,14 +1282,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
           var formObject = this.editEventForm.getRawValue();
-          formObject.id = this.eventDetails.id;
-          console.log(formObject); // const update: Update<Events> = {
-          //   id: this.eventDetails.id,
-          //   changes: this.editEventForm.getRawValue()
-          // }
-
+          console.log(formObject);
           this.store.dispatch(Object(_store_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEvent"])({
-            event: formObject
+            Data: formObject
           })); // this.isSubmited = false;
         }
       }, {
@@ -2474,19 +2470,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       });
       this.updateEvent$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
         return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEvent"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
-          return _this5.eventService.updateEvent(action.event).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+          return _this5.eventService.updateEvent(action.Data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             _this5.toaster.success(response.msg);
 
+            var updateEvent = {
+              id: action.Data.id,
+              changes: Object.assign({}, action.Data)
+            };
             return _event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventSuccess"]({
-              Data: response.Data,
-              msg: response.msg
+              event: updateEvent
             });
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             console.log('error update effect :', error);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventFailure"](error));
-          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
-            return _this5.router.navigate(['events']);
           }));
+        }));
+      });
+      this.redirectAddUpdateEvent$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
+        return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_event_actions__WEBPACK_IMPORTED_MODULE_4__["updateEventSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function () {
+          _this5.router.navigate(['events']);
         }));
       }, {
         dispatch: false
@@ -2632,7 +2634,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       return Object.assign(Object.assign({}, state), {
         error: action.error
       });
-    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEvent"], function (state, action) {
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["on"])(_event_actions__WEBPACK_IMPORTED_MODULE_2__["updateEventSuccess"], function (state, action) {
       return adapter.updateOne(action.event, state);
     }));
 
