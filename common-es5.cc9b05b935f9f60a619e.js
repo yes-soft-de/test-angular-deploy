@@ -1,0 +1,1 @@
+function _classCallCheck(n,s){if(!(n instanceof s))throw new TypeError("Cannot call a class as a function")}(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{LC35:function(n,s,c){"use strict";c.d(s,"a",(function(){return a}));var a=function n(s,c){_classCallCheck(this,n),this.src=s,this.file=c}}}]);
