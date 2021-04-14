@@ -1,11 +1,8 @@
 import { environment } from "src/environments/environment.prod";
 
 export class AdminConfig {
-  // An Example | Delete The Content When Started
   // source api
-  // public static sourceAPI                   = 'http://turkey-app.yes-cloud.de/html/public/index.php/';0
   public static sourceAPI                   = environment.sourceAPI;
-  // public static sourceAPI                   = 'http://localhost:8000/';
 
   // Login
   public static loginAPI                    = AdminConfig.sourceAPI + 'login_check';
