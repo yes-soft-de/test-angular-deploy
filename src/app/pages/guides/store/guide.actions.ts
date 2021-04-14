@@ -35,7 +35,7 @@ export const loadGuideFailure = createAction(
 
 export const updateGuide = createAction(
   '[Guide/API] Update Guide',
-  props<{ id: string, status: string, cost: string }>()
+  props<{ id: string, status: string }>()
 );
 
 

@@ -49,13 +49,13 @@ export const addEventFailure = createAction(
 
 export const updateEvent = createAction(
   '[Event/API] Update Event',
-  props<{ event: Update<Events> }>()
-  );
+  props<{ Data: Events }>()
+);
 
 export const updateEventSuccess = createAction(
-    '[Event/API] Update Event Success',
-  props<{ Data: Events, msg: string }>()
-);
+  '[Event/API] Update Event Success',
+  props<{ event: Update<Events> }>()
+  );
 
 export const updateEventFailure = createAction(
   '[Event/API] Update Event Failure',

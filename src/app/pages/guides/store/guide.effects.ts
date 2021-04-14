@@ -42,7 +42,7 @@ export class GuideEffects {
 
   approveGuide$ = createEffect(() => this.actions$.pipe(
     ofType(guideActions.updateGuide),
-    exhaustMap(action => this.guidesService.updateGuideStatus(action.id, action.status, action.cost)
+    exhaustMap(action => this.guidesService.updateGuideStatus(action.id, action.status)
       .pipe(
         map(response => {
           console.log('effect response : ', response);

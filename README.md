@@ -29,7 +29,8 @@ Open `package.json` file and add these lines below :
 ```json
 {
   "scripts": {
-    ...
+    ...    
+    "add-domain": "echo tourist.yes-soft.de > dist/CNAME",
     "deploy": "npm run build && gh-pages -d dist"
   },
   "homepage": "https://yes-soft-de.github.io/yes-soft-de.github.io",
@@ -39,6 +40,7 @@ Open `package.json` file and add these lines below :
 }
 ```
 > NOTE :
+* `add-domain` : Custom script to insert `Custom Domain` called for example `tourist.yes-soft.de`, which it create a new file called `CNAME` inside `dist` folder
 * `deploy` : Is the script that will use to build, push and publish the app using  `npm run deploy` .
 * `npm run build` : Build the application first
 * `-d ` : d flag Refers to the directory

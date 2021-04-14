@@ -72,6 +72,7 @@ export class EditEventComponent implements OnInit, OnDestroy {
   // fill update form inputs
   fillingForm(data: Events) {
     this.editEventForm = new FormGroup({
+      id: new FormControl(data.id),
       name: new FormControl(data.name),
       description: new FormControl(data.description),
       location: new FormControl(data.location),
@@ -90,13 +91,8 @@ export class EditEventComponent implements OnInit, OnDestroy {
     }
     // Fetch All Form Data On Json Type
     const formObject = this.editEventForm.getRawValue();
-    formObject.id = this.eventDetails.id;
-    console.log(formObject);
-    // const update: Update<Events> = {
-      //   id: this.eventDetails.id,
-      //   changes: this.editEventForm.getRawValue()
-    // }
-    this.store.dispatch(updateEvent({event: formObject}));
+    console.log(formObject);   
+    this.store.dispatch(updateEvent({Data: formObject}));
     // this.isSubmited = false;
   }
 

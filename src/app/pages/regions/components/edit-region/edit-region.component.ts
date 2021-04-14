@@ -58,7 +58,7 @@ export class EditRegionComponent implements OnInit {
       description: new FormControl(''),
       location: new FormControl(''),
       path: new FormControl(''),
-      placeId: new FormControl(''),
+      placeId: new FormControl('', Validators.required),
     });
     this.checkLangChange();     // Check CHange Languages
     this.getRegion();           // Region Details

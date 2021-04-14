@@ -16,25 +16,16 @@ import { SidebarComponent } from './@theme/components';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { environment } from 'src/environments/environment';
 import { appReducer } from './@theme/store/app-state';
 import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment.prod';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDOAu8tqavfWnEit8vuOr7JyxRt2XHjEcs",
-  authDomain: "yes-soft-6866a.firebaseapp.com",
-  databaseURL: "https://yes-soft-6866a.firebaseio.com",
-  projectId: "yes-soft-6866a",
-  storageBucket: "yes-soft-6866a.appspot.com",
-  messagingSenderId: "396882908080",
-  appId: "1:396882908080:web:e86f986ae56c6070fabc75",
-  measurementId: "G-HPC10T199F"
-};
+const firebaseConfig = environment.firebaseConfig;
 
 
 @NgModule({

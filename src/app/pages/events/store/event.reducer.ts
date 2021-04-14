@@ -62,7 +62,7 @@ export const reducer = createReducer(
           error: action.error
         };
     }),
-  on(EventActions.updateEvent,
+  on(EventActions.updateEventSuccess,
     (state, action) => adapter.updateOne(action.event, state)
   ),
 );

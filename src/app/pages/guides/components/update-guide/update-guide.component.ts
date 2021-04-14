@@ -30,8 +30,7 @@ export class UpdateGuideComponent implements OnInit {
 
     this.updateGuideFrom = new FormGroup({
       id: new FormControl(''),
-      status: new FormControl('', Validators.required),
-      cost: new FormControl('', Validators.required),
+      status: new FormControl('', Validators.required)
     });
     this.getGuideById();
   }
@@ -52,7 +51,6 @@ export class UpdateGuideComponent implements OnInit {
     this.updateGuideFrom = new FormGroup({
       id: new FormControl(data.id),
       status: new FormControl(data.status, Validators.required),
-      cost: new FormControl('', Validators.required),
     });
   }
 
@@ -64,6 +62,6 @@ export class UpdateGuideComponent implements OnInit {
     const formObject = this.updateGuideFrom.getRawValue();
     formObject.id = this.guideId;
     console.log(formObject);
-    this.store.dispatch(updateGuide({id: formObject.id, status: formObject.status, cost: formObject.cost}));
+    this.store.dispatch(updateGuide({id: formObject.id, status: formObject.status}));
   }
 }

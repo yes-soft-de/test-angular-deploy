@@ -78,6 +78,7 @@
   "new-guide": "New Guide",
   "city": "City",
   "cost": "Cost",
+  "acceptance-date": "Acceptance Date",
   "cost-type-placeholder": "Type The Cost",
   "region-name": "Region Name",
   "language": "Language",
@@ -112,12 +113,14 @@
   "waiting-uploading-image": "Waiting Uploading Image",
   "phone-number-type-placeholder": "Type The Phone Number",
   "orders": "Orders",
-  "accept-orders": "Accept Orders",
-  "manage-accept-orders-page": "Manage Accept Orders Page",
+  "accept-orders": "Accepted Orders",
+  "manage-accept-orders-page": "Manage Accepted Orders Page",
   "accept-order-search-input": "Searching for Guide Name, Tourist Name, City And Status ?",
   "guide-name": "Guide Name",
   "tourist-name": "Tourist Name",
-  "unaccept-orders": "UnAccept Orders",
-  "manage-unaccept-orders-page": "Manage UnAccept Orders Page",
-  "unaccept-order-search-input": "Searching for Guide Name, Tourist Name And City ?"
+  "unaccept-orders": "New Orders",
+  "manage-unaccept-orders-page": "Manage New Orders Page",
+  "unaccept-order-search-input": "Searching for Guide Name, Tourist Name And City ?",
+  "accept-order-date": "Accepted Order Date",
+  "register-order-date": "Register Order Date"
 }

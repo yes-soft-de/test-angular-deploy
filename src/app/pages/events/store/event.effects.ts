@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Update } from '@ngrx/entity';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, mergeMap, tap } from 'rxjs/operators';
@@ -63,18 +64,30 @@ export class EventEffects {
 
   updateEvent$ = createEffect(() => this.actions$.pipe(
     ofType(eventActions.updateEvent),
-    exhaustMap(action => this.eventService.updateEvent(action.event)
+    exhaustMap(action => this.eventService.updateEvent(action.Data)
       .pipe(
         map(response => {
           this.toaster.success(response.msg);
-          return eventActions.updateEventSuccess({Data: response.Data, msg: response.msg});
+          const updateEvent: Update<Event> = {
+            id: action.Data.id,
+            changes: {
+              ...action.Data
+            }
+          };
+          return eventActions.updateEventSuccess({event: updateEvent});
         }),
         catchError(error => {
           console.log('error update effect :', error);
           return of(eventActions.updateEventFailure(error));
-        }),
-        tap(() => this.router.navigate(['events']))
+        })
       ))
-  ), { dispatch: false });
+  ));
 
+
+  redirectAddUpdateEvent$ = createEffect(() => this.actions$.pipe(
+    ofType(eventActions.updateEventSuccess),
+    map( () => {
+      this.router.navigate(['events']);
+    })
+  ), { dispatch: false });
 }

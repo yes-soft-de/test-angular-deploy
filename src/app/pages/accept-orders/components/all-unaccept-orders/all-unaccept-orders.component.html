@@ -32,7 +32,7 @@
         <td>{{'arrive-date' | translate }}</td>
         <td>{{'leave-date' | translate }}</td>
         <td>{{'cost' | translate }}</td>
-        <td>{{'date' | translate }}</td>
+        <td>{{'register-order-date' | translate }}</td>
       </tr>
       <tr *ngFor="let order of unAcceptOrdersList | paginate: config">
         <td>{{order?.guideName ? order?.guideName : '-'}}</td>

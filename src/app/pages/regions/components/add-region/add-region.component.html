@@ -21,7 +21,7 @@
                            formControlName="name"
                            id="inputNameSuccess"
                            (keydown)="searchLocation($event)"
-                           placeholder="{{'name-type-placeholder' | translate}}">
+                           placeholder="{{'name-type-placeholder' | translate}}" autocomplete="off">
                     <div class="location-search-result px-3 py-2" *ngIf="showSearchResult">
                         <ul class="list-unstyled mb-0" *ngIf="googleLocationsNameList">
                             <li class="pb-1" *ngFor="let location of googleLocationsNameList" (click)="getLocationInfo(location)">{{location?.description}}</li>

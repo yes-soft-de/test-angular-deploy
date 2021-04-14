@@ -20,11 +20,10 @@ export class GuidesService {
     return this.httpClient.get<GuideResponse>(`${AdminConfig.guideByIdAPI}/${guideId}`);
   }
 
-  updateGuideStatus(id: string, status: string, cost: string): Observable<any> {
+  updateGuideStatus(id: string, status: string): Observable<any> {
     const data = {
       id,
-      status,
-      cost
+      status
     };
     return this.httpClient.put<any>(AdminConfig.updateGuideAPI, data);
   }

@@ -8,7 +8,7 @@ import {ImageSnippet} from '../../../../@theme/model/image-snippet';
 import {AdminsService} from '../../services/admins.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DOCUMENT} from '@angular/common';
-import { ActivationEnd, Router } from '@angular/router';
+import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-admin',
@@ -35,8 +35,8 @@ export class NewAdminComponent implements OnInit {
               @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
-    this.router.events.subscribe(route => {
-      if (route instanceof ActivationEnd) {
+    this.router.events.subscribe(route => {      
+      if (route instanceof NavigationEnd && route.urlAfterRedirects == '/admins/add') {
         this.checkCurrentLang();
       }
     });
@@ -108,21 +108,24 @@ export class NewAdminComponent implements OnInit {
 
 
   checkCurrentLang() {
-    if (this.translate.currentLang && this.translate.currentLang == 'ar') {
-      console.log('current lang : ', this.translate.currentLang);
-      this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
-      this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-    } else {
-      this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
-      this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
-    }
+    let timer = 0;
+    const runTwoTime = setInterval(() => {
+      timer++;
+      if (this.translate.currentLang == 'ar') {
+        this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
+        this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+      } else {
+        this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
+        this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+      }
+      if (timer == 2) { clearInterval(runTwoTime); }
+    }, 200);
+    
   }
 
   checkLangChange() {
     this.translate.onLangChange.subscribe(lang => {
-      console.log('lang change to : ', lang);
-      if (lang?.lang && lang?.lang == 'ar') {
-        console.log('lang : ', lang?.lang);
+      if (lang?.lang == 'ar') {
         this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
         this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
       } else {
