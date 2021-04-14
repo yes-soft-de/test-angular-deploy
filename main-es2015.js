@@ -57,9 +57,12 @@ class AuthTokenInterceptor {
                 Authorization: `Bearer ` + token
             })
         });
-        if (req.url == _pages_AdminConfig__WEBPACK_IMPORTED_MODULE_2__["AdminConfig"].generalUploadAPI) {
+        if (req.url == _pages_AdminConfig__WEBPACK_IMPORTED_MODULE_2__["AdminConfig"].generalUploadAPI ||
+            req.url.indexOf(_pages_AdminConfig__WEBPACK_IMPORTED_MODULE_2__["AdminConfig"].googleMapSearchAPI) == 0 ||
+            req.url.indexOf(_pages_AdminConfig__WEBPACK_IMPORTED_MODULE_2__["AdminConfig"].googleMapPlaceDetailsAPI) == 0) {
             return next.handle(req);
         }
+        // return next.handle(req);
         return next.handle(modifiedReq);
     }
 }
@@ -2168,9 +2171,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/__ivy_ngcc__/fesm2015/ngrx-effects.js");
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _theme_store_app_state__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./@theme/store/app-state */ "./src/app/@theme/store/app-state.ts");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/__ivy_ngcc__/fesm2015/agm-core.js");
-
-
 
 
 
@@ -2233,15 +2233,11 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClient"]]
                 }
             }),
-            _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-                apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
-                libraries: ['places']
-            })
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"], _theme_theme_module__WEBPACK_IMPORTED_MODULE_3__["ThemeModule"], _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["StoreRootModule"], _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_14__["StoreDevtoolsModule"], _ngrx_effects__WEBPACK_IMPORTED_MODULE_15__["EffectsRootModule"], _angular_fire__WEBPACK_IMPORTED_MODULE_7__["AngularFireModule"], _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestoreModule"],
-        _angular_fire_database__WEBPACK_IMPORTED_MODULE_9__["AngularFireDatabaseModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"], _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"]] }); })();
+        _angular_fire_database__WEBPACK_IMPORTED_MODULE_9__["AngularFireDatabaseModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"]] }); })();
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
         args: [{
@@ -2267,10 +2263,6 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                             deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClient"]]
                         }
                     }),
-                    _agm_core__WEBPACK_IMPORTED_MODULE_18__["AgmCoreModule"].forRoot({
-                        apiKey: src_environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].googleMapTokenKey,
-                        libraries: ['places']
-                    })
                 ],
                 providers: [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"]],
                 exports: [],
@@ -2309,6 +2301,7 @@ AdminConfig.deleteAdminAPI = AdminConfig.sourceAPI + 'deleteadmin';
 // Regions
 AdminConfig.regionsAPI = AdminConfig.sourceAPI + 'regions';
 AdminConfig.regionAPI = AdminConfig.sourceAPI + 'region';
+AdminConfig.updateRegionAPI = AdminConfig.sourceAPI + 'updateRegion';
 // Events
 AdminConfig.eventsAPI = AdminConfig.sourceAPI + 'events';
 AdminConfig.eventAPI = AdminConfig.sourceAPI + 'event';
@@ -2319,6 +2312,10 @@ AdminConfig.updateGuideAPI = AdminConfig.sourceAPI + 'guidbyadminupdate';
 // Accepted Orders
 AdminConfig.allUnacceptedOrdersAPI = AdminConfig.sourceAPI + 'allunacceptedorders';
 AdminConfig.allAcceptedOrdersAPI = AdminConfig.sourceAPI + 'acceptedordersbystatus';
+// Google Map
+AdminConfig.googleMapTokenAPI = AdminConfig.sourceAPI + 'maphelper';
+AdminConfig.googleMapSearchAPI = 'https://maps.googleapis.com/maps/api/place/autocomplete/';
+AdminConfig.googleMapPlaceDetailsAPI = 'https://maps.googleapis.com/maps/api/place/details/';
 // Upload
 AdminConfig.generalUploadAPI = AdminConfig.sourceAPI + 'uploadfile';
 

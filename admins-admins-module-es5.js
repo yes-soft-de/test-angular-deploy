@@ -765,25 +765,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @ngrx/store */
     "./node_modules/@ngrx/store/__ivy_ngcc__/fesm2015/store.js");
     /* harmony import */
 
 
-    var _services_admins_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _services_admins_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ../../services/admins.service */
     "./src/app/pages/admins/services/admins.service.ts");
     /* harmony import */
 
 
-    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @ngx-translate/core */
     "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
     /* harmony import */
 
 
-    var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ngx-toastr */
     "./node_modules/ngx-toastr/__ivy_ngcc__/fesm2015/ngx-toastr.js");
 
@@ -868,13 +874,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var NewAdminComponent = /*#__PURE__*/function () {
-      function NewAdminComponent(store, adminService, translate, toaster, render, document) {
+      function NewAdminComponent(store, adminService, translate, toaster, router, render, document) {
         _classCallCheck(this, NewAdminComponent);
 
         this.store = store;
         this.adminService = adminService;
         this.translate = translate;
         this.toaster = toaster;
+        this.router = router;
         this.render = render;
         this.document = document;
         this.uploadButtonValue = 'upload';
@@ -887,6 +894,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(NewAdminComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
+          var _this3 = this;
+
+          this.router.events.subscribe(function (route) {
+            if (route instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivationEnd"]) {
+              _this3.checkCurrentLang();
+            }
+          });
           this.addAdminForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required),
@@ -918,7 +932,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "processFile",
         value: function processFile(imageInput) {
-          var _this3 = this;
+          var _this4 = this;
 
           this.fileSelected = false;
           this.uploadButtonValue = 'uploading...';
@@ -926,19 +940,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var file = imageInput.files[0];
           var reader = new FileReader();
           reader.addEventListener('load', function (event) {
-            _this3.selectedFile = new _theme_model_image_snippet__WEBPACK_IMPORTED_MODULE_3__["ImageSnippet"](event.target.result, file);
+            _this4.selectedFile = new _theme_model_image_snippet__WEBPACK_IMPORTED_MODULE_3__["ImageSnippet"](event.target.result, file);
 
-            _this3.adminService.uploadImage(_this3.selectedFile.file).subscribe(function (res) {
+            _this4.adminService.uploadImage(_this4.selectedFile.file).subscribe(function (res) {
               console.log(res);
-              _this3.imageUrl = res;
-              _this3.uploadButtonValue = 'uploaded';
-              _this3.imagePathReady = true;
-              _this3.submitButtonValue = 'new-admin';
+              _this4.imageUrl = res;
+              _this4.uploadButtonValue = 'uploaded';
+              _this4.imagePathReady = true;
+              _this4.submitButtonValue = 'new-admin';
             }, function (err) {
-              _this3.uploadButtonValue = 'upload';
-              _this3.fileSelected = true;
+              _this4.uploadButtonValue = 'upload';
+              _this4.fileSelected = true;
 
-              _this3.toaster.error('Network Error, Please Try After a Few Seconds');
+              _this4.toaster.error('Network Error, Please Try After a Few Seconds');
 
               console.log(err);
             });
@@ -962,23 +976,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }));
         }
       }, {
+        key: "checkCurrentLang",
+        value: function checkCurrentLang() {
+          if (this.translate.currentLang && this.translate.currentLang == 'ar') {
+            console.log('current lang : ', this.translate.currentLang);
+            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group');
+            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+          } else {
+            this.render.addClass(this.document.querySelector('.input-group-custom'), 'input-group');
+            this.render.removeClass(this.document.querySelector('.input-group-custom'), 'input-group-ar');
+          }
+        }
+      }, {
         key: "checkLangChange",
         value: function checkLangChange() {
-          var _this4 = this;
+          var _this5 = this;
 
           this.translate.onLangChange.subscribe(function (lang) {
             console.log('lang change to : ', lang);
 
-            if (lang.lang == 'ar') {
-              console.log('lang : ', lang.lang);
+            if ((lang === null || lang === void 0 ? void 0 : lang.lang) && (lang === null || lang === void 0 ? void 0 : lang.lang) == 'ar') {
+              console.log('lang : ', lang === null || lang === void 0 ? void 0 : lang.lang);
 
-              _this4.render.removeClass(_this4.document.querySelector('.input-group-custom'), 'input-group');
+              _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
-              _this4.render.addClass(_this4.document.querySelector('.input-group-custom'), 'input-group-ar');
+              _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
             } else {
-              _this4.render.addClass(_this4.document.querySelector('.input-group-custom'), 'input-group');
+              _this5.render.addClass(_this5.document.querySelector('.input-group-custom'), 'input-group');
 
-              _this4.render.removeClass(_this4.document.querySelector('.input-group-custom'), 'input-group-ar');
+              _this5.render.removeClass(_this5.document.querySelector('.input-group-custom'), 'input-group-ar');
             }
           });
         }
@@ -988,7 +1014,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     NewAdminComponent.ɵfac = function NewAdminComponent_Factory(t) {
-      return new (t || NewAdminComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_5__["Store"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_admins_service__WEBPACK_IMPORTED_MODULE_6__["AdminsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_4__["DOCUMENT"]));
+      return new (t || NewAdminComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_6__["Store"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_admins_service__WEBPACK_IMPORTED_MODULE_7__["AdminsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_9__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_4__["DOCUMENT"]));
     };
 
     NewAdminComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -1270,7 +1296,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       },
       directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"]],
-      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslatePipe"]],
+      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslatePipe"]],
       styles: [".fa-custom[_ngcontent-%COMP%] {\n  display: inline-block;\n  position: absolute;\n  top: 12px;\n  right: 15px;\n  cursor: pointer;\n  opacity: 0.5;\n}\n.fa-custom[_ngcontent-%COMP%]:hover {\n  opacity: 1;\n}\n.input-group-ar[_ngcontent-%COMP%] {\n  position: relative;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: stretch;\n  width: 100%;\n}\n.input-group-ar[_ngcontent-%COMP%]    > .custom-file[_ngcontent-%COMP%] {\n  position: relative;\n  flex: 1 1 auto;\n  width: 1%;\n  margin-bottom: 0;\n}\n.input-group-ar[_ngcontent-%COMP%]    > .custom-file[_ngcontent-%COMP%]   .custom-file-input[_ngcontent-%COMP%] {\n  width: 100%;\n  min-width: 14rem;\n  max-width: 100%;\n  height: calc(2.25rem + 2px);\n  margin: 0;\n  opacity: 0;\n}\n.input-group-ar[_ngcontent-%COMP%]    > .custom-file[_ngcontent-%COMP%]   .custom-file-label[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 0;\n  right: 0;\n  left: 0;\n  z-index: 1;\n  height: calc(2.25rem + 2px);\n  padding: 0.375rem 0.75rem;\n  line-height: 1.5;\n  color: #495057;\n  background-color: #fff;\n  border: 1px solid #ced4da;\n  border-radius: 0.25rem;\n}\n.input-group-ar[_ngcontent-%COMP%]    > .custom-file[_ngcontent-%COMP%]   .custom-file-label[_ngcontent-%COMP%]:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 3;\n  display: block;\n  height: calc(calc(2.25rem + 2px) - 1px * 2);\n  padding: 0.375rem 0.75rem;\n  line-height: 1.5;\n  color: #495057;\n  content: \"Browse\";\n  background-color: #e9ecef;\n  border-left: 1px solid #ced4da;\n  border-radius: 0.25rem 0 0 0.25rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvYWRtaW5zL2NvbXBvbmVudHMvbmV3LWFkbWluL0Q6XFxTZXJ2ZXJzXFxkYXNoYm9hcmRzXFx0b3VyaXN0LXRlc3QtZGVwbG95L3NyY1xcYXBwXFxwYWdlc1xcYWRtaW5zXFxjb21wb25lbnRzXFxuZXctYWRtaW5cXG5ldy1hZG1pbi5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvcGFnZXMvYWRtaW5zL2NvbXBvbmVudHMvbmV3LWFkbWluL25ldy1hZG1pbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFCQUFBO0VBQ0Esa0JBQUE7RUFDQSxTQUFBO0VBQ0EsV0FBQTtFQUNBLGVBQUE7RUFDQSxZQUFBO0FDQ0Y7QURBRTtFQUFVLFVBQUE7QUNHWjtBRERBO0VBQ0Usa0JBQUE7RUFHQSxhQUFBO0VBRUEsZUFBQTtFQUdBLG9CQUFBO0VBQ0EsV0FBQTtBQ0lGO0FESEU7RUFDRSxrQkFBQTtFQUdBLGNBQUE7RUFDQSxTQUFBO0VBQ0EsZ0JBQUE7QUNLSjtBREpJO0VBQ0UsV0FBQTtFQUNBLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLDJCQUFBO0VBQ0EsU0FBQTtFQUNBLFVBQUE7QUNNTjtBREpJO0VBQ0Usa0JBQUE7RUFDQSxNQUFBO0VBQ0EsUUFBQTtFQUNBLE9BQUE7RUFDQSxVQUFBO0VBQ0EsMkJBQUE7RUFDQSx5QkFBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTtFQUNBLHNCQUFBO0VBQ0EseUJBQUE7RUFDQSxzQkFBQTtBQ01OO0FETE07RUFDRSxrQkFBQTtFQUNBLE1BQUE7RUFDQSxPQUFBO0VBQ0EsU0FBQTtFQUNBLFVBQUE7RUFDQSxjQUFBO0VBQ0EsMkNBQUE7RUFDQSx5QkFBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSw4QkFBQTtFQUNBLGtDQUFBO0FDT1IiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9hZG1pbnMvY29tcG9uZW50cy9uZXctYWRtaW4vbmV3LWFkbWluLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZhLWN1c3RvbSB7XHJcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDEycHg7XHJcbiAgcmlnaHQ6IDE1cHg7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIG9wYWNpdHk6IC41O1xyXG4gICY6aG92ZXIgeyBvcGFjaXR5OiAxOyB9XHJcbn1cclxuLmlucHV0LWdyb3VwLWFyIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgZGlzcGxheTogLXdlYmtpdC1ib3g7XHJcbiAgZGlzcGxheTogLW1zLWZsZXhib3g7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICAtbXMtZmxleC13cmFwOiB3cmFwO1xyXG4gIGZsZXgtd3JhcDogd3JhcDtcclxuICAtd2Via2l0LWJveC1hbGlnbjogc3RyZXRjaDtcclxuICAtbXMtZmxleC1hbGlnbjogc3RyZXRjaDtcclxuICBhbGlnbi1pdGVtczogc3RyZXRjaDtcclxuICB3aWR0aDogMTAwJTtcclxuICAmID4gLmN1c3RvbS1maWxlIHtcclxuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgIC13ZWJraXQtYm94LWZsZXg6IDE7XHJcbiAgICAtbXMtZmxleDogMSAxIGF1dG87XHJcbiAgICBmbGV4OiAxIDEgYXV0bztcclxuICAgIHdpZHRoOiAxJTtcclxuICAgIG1hcmdpbi1ib3R0b206IDA7XHJcbiAgICAuY3VzdG9tLWZpbGUtaW5wdXQge1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgbWluLXdpZHRoOiAxNHJlbTtcclxuICAgICAgbWF4LXdpZHRoOiAxMDAlO1xyXG4gICAgICBoZWlnaHQ6IGNhbGMoMi4yNXJlbSArIDJweCk7XHJcbiAgICAgIG1hcmdpbjogMDtcclxuICAgICAgb3BhY2l0eTogMDtcclxuICAgIH1cclxuICAgIC5jdXN0b20tZmlsZS1sYWJlbCB7XHJcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgdG9wOiAwO1xyXG4gICAgICByaWdodDogMDtcclxuICAgICAgbGVmdDogMDtcclxuICAgICAgei1pbmRleDogMTtcclxuICAgICAgaGVpZ2h0OiBjYWxjKDIuMjVyZW0gKyAycHgpO1xyXG4gICAgICBwYWRkaW5nOiAuMzc1cmVtIC43NXJlbTtcclxuICAgICAgbGluZS1oZWlnaHQ6IDEuNTtcclxuICAgICAgY29sb3I6ICM0OTUwNTc7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkICNjZWQ0ZGE7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IC4yNXJlbTtcclxuICAgICAgJjphZnRlciB7XHJcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgIHRvcDogMDtcclxuICAgICAgICBsZWZ0OiAwO1xyXG4gICAgICAgIGJvdHRvbTogMDtcclxuICAgICAgICB6LWluZGV4OiAzO1xyXG4gICAgICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgICAgIGhlaWdodDogY2FsYyhjYWxjKDIuMjVyZW0gKyAycHgpIC0gMXB4ICogMik7XHJcbiAgICAgICAgcGFkZGluZzogMC4zNzVyZW0gMC43NXJlbTtcclxuICAgICAgICBsaW5lLWhlaWdodDogMS41O1xyXG4gICAgICAgIGNvbG9yOiAjNDk1MDU3O1xyXG4gICAgICAgIGNvbnRlbnQ6IFwiQnJvd3NlXCI7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2U5ZWNlZjtcclxuICAgICAgICBib3JkZXItbGVmdDogMXB4IHNvbGlkICNjZWQ0ZGE7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMC4yNXJlbSAwIDAgMC4yNXJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxufVxyXG4iLCIuZmEtY3VzdG9tIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMTJweDtcbiAgcmlnaHQ6IDE1cHg7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgb3BhY2l0eTogMC41O1xufVxuLmZhLWN1c3RvbTpob3ZlciB7XG4gIG9wYWNpdHk6IDE7XG59XG5cbi5pbnB1dC1ncm91cC1hciB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogLXdlYmtpdC1ib3g7XG4gIGRpc3BsYXk6IC1tcy1mbGV4Ym94O1xuICBkaXNwbGF5OiBmbGV4O1xuICAtbXMtZmxleC13cmFwOiB3cmFwO1xuICBmbGV4LXdyYXA6IHdyYXA7XG4gIC13ZWJraXQtYm94LWFsaWduOiBzdHJldGNoO1xuICAtbXMtZmxleC1hbGlnbjogc3RyZXRjaDtcbiAgYWxpZ24taXRlbXM6IHN0cmV0Y2g7XG4gIHdpZHRoOiAxMDAlO1xufVxuLmlucHV0LWdyb3VwLWFyID4gLmN1c3RvbS1maWxlIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAtd2Via2l0LWJveC1mbGV4OiAxO1xuICAtbXMtZmxleDogMSAxIGF1dG87XG4gIGZsZXg6IDEgMSBhdXRvO1xuICB3aWR0aDogMSU7XG4gIG1hcmdpbi1ib3R0b206IDA7XG59XG4uaW5wdXQtZ3JvdXAtYXIgPiAuY3VzdG9tLWZpbGUgLmN1c3RvbS1maWxlLWlucHV0IHtcbiAgd2lkdGg6IDEwMCU7XG4gIG1pbi13aWR0aDogMTRyZW07XG4gIG1heC13aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiBjYWxjKDIuMjVyZW0gKyAycHgpO1xuICBtYXJnaW46IDA7XG4gIG9wYWNpdHk6IDA7XG59XG4uaW5wdXQtZ3JvdXAtYXIgPiAuY3VzdG9tLWZpbGUgLmN1c3RvbS1maWxlLWxhYmVsIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBsZWZ0OiAwO1xuICB6LWluZGV4OiAxO1xuICBoZWlnaHQ6IGNhbGMoMi4yNXJlbSArIDJweCk7XG4gIHBhZGRpbmc6IDAuMzc1cmVtIDAuNzVyZW07XG4gIGxpbmUtaGVpZ2h0OiAxLjU7XG4gIGNvbG9yOiAjNDk1MDU3O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2VkNGRhO1xuICBib3JkZXItcmFkaXVzOiAwLjI1cmVtO1xufVxuLmlucHV0LWdyb3VwLWFyID4gLmN1c3RvbS1maWxlIC5jdXN0b20tZmlsZS1sYWJlbDphZnRlciB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOiAwO1xuICBsZWZ0OiAwO1xuICBib3R0b206IDA7XG4gIHotaW5kZXg6IDM7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBoZWlnaHQ6IGNhbGMoY2FsYygyLjI1cmVtICsgMnB4KSAtIDFweCAqIDIpO1xuICBwYWRkaW5nOiAwLjM3NXJlbSAwLjc1cmVtO1xuICBsaW5lLWhlaWdodDogMS41O1xuICBjb2xvcjogIzQ5NTA1NztcbiAgY29udGVudDogXCJCcm93c2VcIjtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2U5ZWNlZjtcbiAgYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjY2VkNGRhO1xuICBib3JkZXItcmFkaXVzOiAwLjI1cmVtIDAgMCAwLjI1cmVtO1xufSJdfQ== */"]
     });
     /*@__PURE__*/
@@ -1285,13 +1311,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }]
       }], function () {
         return [{
-          type: _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["Store"]
+          type: _ngrx_store__WEBPACK_IMPORTED_MODULE_6__["Store"]
         }, {
-          type: _services_admins_service__WEBPACK_IMPORTED_MODULE_6__["AdminsService"]
+          type: _services_admins_service__WEBPACK_IMPORTED_MODULE_7__["AdminsService"]
         }, {
-          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"]
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]
         }, {
-          type: ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrService"]
+          type: ngx_toastr__WEBPACK_IMPORTED_MODULE_9__["ToastrService"]
+        }, {
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
         }, {
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]
         }, {
@@ -1567,7 +1595,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/ngx-toastr/__ivy_ngcc__/fesm2015/ngx-toastr.js");
 
     var AdminEffects = function AdminEffects(actions$, adminService, router, activatedRoute, toaster) {
-      var _this5 = this;
+      var _this6 = this;
 
       _classCallCheck(this, AdminEffects);
 
@@ -1577,8 +1605,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.activatedRoute = activatedRoute;
       this.toaster = toaster;
       this.loadAdmins$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdmins"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
-          return _this5.adminService.getAdmins().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdmins"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function () {
+          return _this6.adminService.getAdmins().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdminsSuccess"](response);
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["loadAdminsFailure"]({
@@ -1588,9 +1616,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }));
       });
       this.addAdmin$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
-          return _this5.adminService.newAdmin(action.admin).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
-            _this5.toaster.success(response.msg);
+        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["exhaustMap"])(function (action) {
+          return _this6.adminService.newAdmin(action.admin).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            _this6.toaster.success(response.msg);
 
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]();
           }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
@@ -1601,18 +1629,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }));
       });
       this.redirectAfterAdd$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
-          return _this5.router.navigate(['admins']);
+        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["addAdminSuccess"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
+          return _this6.router.navigate(['admins']);
         }));
       }, {
         dispatch: false
       });
       this.deleteAdmin$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["createEffect"])(function () {
-        return _this5.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
-          return _this5.adminService.deleteAdmin(action.userID).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+        return _this6.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_1__["ofType"])(_admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdmin"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (action) {
+          return _this6.adminService.deleteAdmin(action.userID).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             console.log('effect res : ', response);
 
-            _this5.toaster.success(response.msg);
+            _this6.toaster.success(response.msg);
 
             return _admin_actions__WEBPACK_IMPORTED_MODULE_2__["deleteAdminSuccess"]({
               userID: action.userID
