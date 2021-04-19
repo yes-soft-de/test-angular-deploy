@@ -27,12 +27,25 @@
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-      
+      // function initMap(){
+      //     navigator.geolocation.getCurrentPosition(success, error);
+      // }
     function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 40.749933, lng: -73.98633 },
-        zoom: 13,
-      });
+   
+      var number = 0;
+        var elemExists = setInterval(function () {
+          number++;
+          console.log('number : ', number);
+          var elem = document.getElementById("map");
+          if (elem || number == 500) {          
+            const map = new google.maps.Map(elem, {
+              center: { lat: 40.749933, lng: -73.98633 },
+              zoom: 13,
+            });
+            clearInterval(elemExists);
+          }
+        }, 100);
+      
       const card = document.getElementById("pac-card");
       const input = document.getElementById("pac-input");
       const biasInputElement = document.getElementById("use-location-bias");
