@@ -31,7 +31,16 @@
           navigator.geolocation.getCurrentPosition(success, error);
       }
       function error(err) {
-        document.getElementById("map").innerHTML = ('ERROR(' + err.code + '): ' + err.message);
+        var number = 0;
+        var elemExists = setInterval(function () {
+          number++;
+          console.log('number : ', number);
+          var elem = document.getElementById("map");
+          if (elem || number == 500) {          
+            elem.innerHTML = ('ERROR(' + err.code + '): ' + err.message);
+            clearInterval(elemExists);
+          }
+        }, 100);
       };
     function success() {
       const map = new google.maps.Map(document.getElementById("map"), {
