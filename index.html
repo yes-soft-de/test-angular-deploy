@@ -33,7 +33,7 @@
       var elementExists = setInterval(function () {
         number++;
         var elementMap = document.getElementById("map");
-        console.log(number);
+        // console.log(number);
         if (elementMap) {
             const map = new google.maps.Map(elementMap, {
               // center: { lat: -33.8688, lng: 151.2195 },
@@ -102,7 +102,7 @@
             });
           clearInterval(elementExists);
         }
-      }, 100);
+      }, 1000);
     }
   </script>
 <link rel="stylesheet" href="styles.eee3068f2b9ebdf8d68c.css"></head>
