@@ -76,8 +76,11 @@
                   anchor: new google.maps.Point(17, 34),
                   scaledSize: new google.maps.Size(25, 25),
                 };
-                console.log('place : ', place);
-                window.document.getElementById('app_root').setAttribute('placeid', place.place_id)
+                console.log('place  : ', place);
+                window.document.getElementById('app_root').setAttribute('placeid', place.place_id);
+                window.document.getElementById('app_root').setAttribute('lan', place.geometry.viewport.La.i);
+                window.document.getElementById('app_root').setAttribute('lat', place.geometry.viewport.La.g);
+                window.document.getElementById('app_root').setAttribute('formattedAddress', place.formatted_address);
                 // Create a marker for each place.
                 markers.push(
                   new google.maps.Marker({
@@ -105,7 +108,7 @@
 <link rel="stylesheet" href="styles.eee3068f2b9ebdf8d68c.css"></head>
 <body>
 
-  <app-root id="app_root" placeID=""></app-root>
+  <app-root id="app_root" placeID="" lan="" lat="" formattedAddress=""></app-root>
   
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -120,5 +123,5 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwb8pKJI4CyMCgFuNtUo3zxVS7y5PN97I&callback=initMap&libraries=places&v=weekly"
     async
   ></script>
-<script src="runtime-es2015.eeb6fc65d60819b01d9d.js" type="module"></script><script src="runtime-es5.eeb6fc65d60819b01d9d.js" nomodule defer></script><script src="polyfills-es5.64db94da485a8fefc3f3.js" nomodule defer></script><script src="polyfills-es2015.1c036d218568a752e64f.js" type="module"></script><script src="main-es2015.5e127835ea55f8727e11.js" type="module"></script><script src="main-es5.5e127835ea55f8727e11.js" nomodule defer></script></body>
+<script src="runtime-es2015.e3afe501784d8b7422cb.js" type="module"></script><script src="runtime-es5.e3afe501784d8b7422cb.js" nomodule defer></script><script src="polyfills-es5.64db94da485a8fefc3f3.js" nomodule defer></script><script src="polyfills-es2015.1c036d218568a752e64f.js" type="module"></script><script src="main-es2015.5e127835ea55f8727e11.js" type="module"></script><script src="main-es5.5e127835ea55f8727e11.js" nomodule defer></script></body>
 </html>
