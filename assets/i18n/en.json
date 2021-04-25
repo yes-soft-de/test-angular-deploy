@@ -38,6 +38,7 @@
   "region-not-found": "There's not any region to show yet",
   "create-region-page": "Create Region Page",
   "create-event-page": "Create Event Page",
+  "event-details-page": "Event Details Page",
   "name-type-placeholder": "Type The Name",
   "description-type-placeholder": "Type The description",
   "location-type-placeholder": "Type The Location",

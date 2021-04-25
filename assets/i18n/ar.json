@@ -38,6 +38,7 @@
   "region-not-found": "لا يوجد مناطق سياحية للعرض بعد",
   "create-region-page": "صفحة اضافة المناطق السياحية",
   "create-event-page": "صفحة اضافة الحدث",
+  "event-details-page": "صفحة تفاصيل الحدث",
   "select-type-placeholder": "اختر النوع رجاء",
   "sub-type-placeholder": "ادخل النوع الفرعي رجاء",
   "select-status-placeholder": "اختر الحالة رجاء",
