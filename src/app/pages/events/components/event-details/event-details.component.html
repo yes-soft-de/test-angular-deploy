@@ -1,0 +1,93 @@
+<div class="event-details" *ngIf="event">
+    <div class="container">
+      <h1 class="my-3 details-title">{{'event-details-page' | translate}}</h1>
+      <div class="row">
+        <div class="col-12 col-sm-5 col-md-4 position-relative mx-auto text-center mb-3">
+          <div class="image-details mb-3">
+            <img class="img-fluid img-thumbnail" src="{{event?.images?.image}}" alt="{{event?.name}} Image" />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 mx-auto">
+          <div class="info-details">
+            <ul class="list-unstyled">
+            <li>
+                <div class="row">
+                    <div class="col">
+                    <h4 class="text-info">{{event?.name}}</h4>
+                    </div>
+                    <div *ngIf="event?.status" class="col align-self-center text-right">
+                    <span class="status border border-secondary rounded py-1 px-2">{{event?.status | translate}}</span>
+                    </div>
+                </div>
+                </li>
+              <li class="mb-2" *ngIf="event?.location"><p class="mb-0">{{'location' | translate }} : <span class="text-secondary">{{event?.location}}</span></p></li>
+              <li class="mb-2" *ngIf="event?.type"><p class="mb-0">{{'type' | translate }} : <span class="text-secondary">{{event?.type}}</span></p></li>
+              <!-- <li class="mb-2" *ngIf="event?.subType"><p class="mb-0">{{'sub-type' | translate }} : <span class="text-secondary">{{event?.subType}}</span></p></li> -->
+              <li class="mb-2" *ngIf="event?.date"><p class="mb-0">{{'date' | translate }} : <span class="text-secondary">{{event?.date.timestamp * 1000 | date}}</span></p></li>
+              <li class="mb-2" *ngIf="event?.description">
+                <p><b>{{'description' | translate }} :</b><br>
+                  <span class="m-1 px-1">{{event?.description}}</span>
+                </p>
+              </li>
+            </ul>
+          </div><!--.info-details-->
+        </div><!--.col-12-->
+        
+
+        <div class="col-12">
+          <hr class="w-50 mx-auto">
+        </div>  
+        <div class="col-12" *ngIf="eventCommentsList.length > 0">
+          <h3 class="">{{'comments' | translate}} :</h3>
+        </div>
+        <div class="card col-12 px-0">
+          <div class="card-header">
+            <!-- <h1 class="text-center details-title my-4">{{'manage-comment-page' | translate}}</h1> -->
+          </div>
+          <div class="card-body p-2">
+            <div class="messages-body my-3 pt-3 p-2">
+              <div class="comment-block" *ngFor="let comment of eventCommentsList | paginate: config">
+                <div class="row">
+                  <div class="col-2 col-lg-1 text-center pr-0 align-self-center">
+                    <div class="user-img">
+                      <img class="res-image"
+                          src="{{comment?.userImage ? comment?.userImage :  '../../../../../assets/default-avatar.jpg'}}"
+                          alt=""/>
+                    </div>
+                  </div>
+                  <div class="col-10 col-lg-11 mt-2 mt-sm-0">
+                    <div class="comment-body py-2 px-3">
+                      <div class="time">
+                        <span class="pb-1">{{comment?.userName}} {{comment?.date != null ? '( ' + (comment?.date.timestamp * 1000 | date: 'medium') + ' )' : ''}}</span>
+                      </div>
+                     <p class="comment m-0">
+                       {{comment?.comment}}
+                     </p>
+                    </div>
+                  </div>
+                </div><!--.row-->
+              </div><!--.comment-block-->
+            </div><!--.messages-body-->
+          </div><!--.card-body-->
+          <div class="card-footer text-center">
+            <pagination-controls id="event-comments"
+                                 (pageChange)="pageChanged($event)"
+                                 autoHide="true"
+                                 maxSize="5"
+                                 responsive="true"
+                                 previousLabel="{{'prev' | translate}}"
+                                 nextLabel="{{'next' | translate}}"
+                                 screenReaderPaginationLabel="Pagination"
+                                 screenReaderPageLabel="page"
+                                 screenReaderCurrentLabel="{{'you-are-on-page' | translate}}">
+            </pagination-controls>
+          </div><!--.card-footer-->
+        </div><!--.card-->
+  
+      </div><!--.row-->
+    </div>
+  </div>
+  <div *ngIf="!event">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+  

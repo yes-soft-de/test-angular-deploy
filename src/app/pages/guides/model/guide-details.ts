@@ -1,7 +1,8 @@
 export interface GuideDetails {
   id: number;
   baseURL: string;
-  city: Array<string>;
+  city?: Array<string>;
+  cities?: Array<string>;
   image: string;
   imageURL: string;
   language: Array<string>;

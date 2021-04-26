@@ -6,6 +6,7 @@ import { ImageSnippet } from 'src/app/@theme/model/image-snippet';
 import { EventState } from '../../store/event.reducer';
 import {addEvent} from '../../store/event.actions';
 import {getAddEventErrorSelector} from '../../store/event.selector';
+import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-add-event',
@@ -21,12 +22,14 @@ export class AddEventComponent implements OnInit {
   imageName = 'Select Image';
   fileSelected = false;
   fileUploaded = false;
+  imageUploaded = false;
   imageUrl: string;
   imagePathReady = false;
   submitButtonValue = 'Waiting Uploading Image';
   selectedFile: ImageSnippet;
 
   constructor(private store: Store<EventState>,
+              private eventService: EventsService,
               private toaster: ToastrService) {
   }
 
@@ -38,7 +41,8 @@ export class AddEventComponent implements OnInit {
       location: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
       date: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required)
+      type: new FormControl('', Validators.required),
+      image: new FormControl(''),
     });
 
     this.store.select(getAddEventErrorSelector).subscribe(error => console.log('error', error));
@@ -47,6 +51,42 @@ export class AddEventComponent implements OnInit {
 
 
 
+  updateName(imageInput: any) {
+    const file: File = imageInput.files[0];
+    this.uploadButtonValue = 'upload';
+    this.imageName = file.name;
+    this.fileSelected = true;
+  }
+
+  processFile(imageInput: any) {
+    this.fileSelected = false;
+    this.imageUploaded = true;
+    this.uploadButtonValue = 'uploading...';
+    console.log('Processing File');
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+      this.eventService.uploadImage(this.selectedFile.file).subscribe(
+        (res) => {
+          console.log(res);
+          this.imageUrl = res;
+          this.uploadButtonValue = 'uploaded';
+          this.imagePathReady = true;
+          this.imageUploaded = false;
+          this.submitButtonValue = 'new-event';
+        },
+        (err) => {
+          this.uploadButtonValue = 'upload';
+          this.fileSelected = true;
+          this.imageUploaded = false;
+          this.toaster.error('Network Error, Please Try After a Few Seconds');
+          console.log(err);
+        });
+    });
+    reader.readAsDataURL(file);
+  }
 
   onSubmit() {
     // this.isSubmited = true;
@@ -56,7 +96,8 @@ export class AddEventComponent implements OnInit {
       return false;
     }
     // Fetch All Form Data On Json Type
-    const formObject = this.addEventForm.getRawValue();
+    const formObject = this.addEventForm.getRawValue();      
+    formObject.image = this.imageUrl;
     console.log(formObject);
     this.store.dispatch(addEvent({event: formObject}));
   }

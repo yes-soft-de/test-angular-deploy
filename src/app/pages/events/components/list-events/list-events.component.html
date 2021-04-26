@@ -25,24 +25,26 @@
         <div class="table-responsive text-center">
             <table class="table table-bordered main-table">
                 <tr class="bg-dark text-white">
+                    <td>{{'image' | translate }}</td>
                     <td>{{'name' | translate }}</td>
                     <td>{{'comment-number' | translate }}</td>
                     <td>{{'date' | translate }}</td>
                     <td>{{'description' | translate }}</td>
                     <td>{{'location' | translate }}</td>
                     <td>{{'status' | translate }}</td>
-                    <td>{{'sub-type' | translate }}</td>
+                    <!-- <td>{{'sub-type' | translate }}</td> -->
                     <td>{{'type' | translate }}</td>
                     <td>{{'control' | translate}}</td>
                 </tr>
                 <tr *ngFor="let event of eventsList | paginate: config">
+                  <td><img src="{{event?.images}}" alt="{{event?.name}} Image" class="img-thumbnail img-custom"></td>
                     <td>{{event?.name ? event?.name : '-'}}</td>
                     <td>{{event?.commentNumber ? event?.commentNumber : '-'}}</td>
                     <td style="white-space: nowrap;">{{event?.date ? (event?.date.timestamp * 1000 | date: 'yyyy-MM-dd') : '-'}}</td>
                     <td class="td-custom">{{event?.description ? event?.description : '-'}}</td>
                     <td>{{event?.location ? event?.location : '-'}}</td>
                     <td>{{event?.status ? event?.status : '-'}}</td>
-                    <td>{{event?.subType ? event?.subType : '-'}}</td>
+                    <!-- <td>{{event?.subType ? event?.subType : '-'}}</td> -->
                     <td>{{event?.type ? event?.type : '-'}}</td>
                   <!-- <td>
                     <a (click)="suggest(car.id, (car.suggest ? false : true))"
@@ -54,12 +56,15 @@
                     </a>
                   </td> -->
                   <td>
-                      <a routerLink="edit/{{event.id}}" class="btn btn-success btn-sm mr-1 mb-1">
+                    <a routerLink="edit/{{event.id}}" class="btn btn-success btn-sm mr-1 mb-1">
                         {{'update' | translate}}
                     </a>
-                    <!-- <a (click)="delete(event.id)" class="btn btn-danger confirm btn-sm mr-1 mb-1 {{isDeleted ? 'disabled' : ''}}">
-                        {{'delete' | translate}}
-                      </a> -->
+                    <a (click)="delete(event?.id)" class="btn btn-danger confirm btn-sm mr-1 mb-1 {{isDeleted ? 'disabled' : ''}}">
+                      {{'delete' | translate}}
+                    </a>
+                    <a routerLink="{{event?.id}}" class="btn bg-light-blue text-white btn-sm mr-1 mb-1">
+                      {{'view' | translate}}
+                    </a>
                   </td>
                 </tr>
             </table>

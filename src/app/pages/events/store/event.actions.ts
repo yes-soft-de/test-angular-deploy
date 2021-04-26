@@ -61,3 +61,18 @@ export const updateEventFailure = createAction(
   '[Event/API] Update Event Failure',
   props<{ error: string }>()
 );
+
+export const deleteEvent = createAction(
+  '[Event/API] Delete Event',
+  props<{ id: string }>()
+);
+
+export const deleteEventSuccess = createAction(
+  '[Event/API] Delete Event Success',
+  props<{ id: string }>()
+  );
+
+export const deleteEventFailure = createAction(
+  '[Event/API] Delete Event Failure',
+  props<{ error: string }>()
+);

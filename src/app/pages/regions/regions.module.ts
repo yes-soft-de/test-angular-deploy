@@ -10,13 +10,15 @@ import { RegionEffects } from './store/region.effects';
 import { ThemeModule } from 'src/app/@theme/theme.module';
 import { AddRegionComponent } from './components/add-region/add-region.component';
 import { EditRegionComponent } from './components/edit-region/edit-region.component';
+import { RegionsDetailsComponent } from './components/regions-details/regions-details.component';
 
 
 @NgModule({
   declarations: [
     AllRegionsComponent,
     AddRegionComponent,
-    EditRegionComponent
+    EditRegionComponent,
+    RegionsDetailsComponent
   ],
   imports: [
     ThemeModule,

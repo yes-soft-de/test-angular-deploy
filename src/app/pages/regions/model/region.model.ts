@@ -1,3 +1,5 @@
+import { Guide } from "../../guides/model/guide.model";
+
 export interface Region {
   id?: number;
   name?: string;
@@ -20,4 +22,15 @@ export interface Region {
         pathURL: string;
     }
 ];
+guides: Guide[];
+comments: [
+    {
+        comment: string
+        date: { timestamp: number; };
+        roles: Array<string>;
+        userImage: string;
+        userName: string;
+    }
+];
+userRating?: number;
 }

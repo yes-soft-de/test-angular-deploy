@@ -37,6 +37,8 @@ export class EditRegionComponent implements OnInit {
   showSearchResult = false;
   googleMapToken: string;
   googleLocationsNameList: GoogleMap[];
+  googlePlaceID: string;
+  googlePlaceLocation: Array<any> = [];
 
   constructor(private store: Store<RegionState>,
               private regionService: RegionsService,
@@ -76,11 +78,38 @@ export class EditRegionComponent implements OnInit {
       data => {
         if (data) {
           this.regionData = data;
-          console.log('data detail: ', data);
+          // console.log('data detail: ', data);
           this.fillForms(data);
         }
       }
     );
+  }
+
+  // Search Location
+  location () {
+    this.googlePlaceLocation = [];
+    const description = this.editRegionForm.get('description').value;
+    const getPlaceId = setInterval(() => {
+      const appRoot           = this.document.getElementById('app_root')
+      const placeId           = appRoot.getAttribute('placeid');    
+      const lan               = appRoot.getAttribute('lan');    
+      const lat               = appRoot.getAttribute('lat');    
+      const formattedAddress  = appRoot.getAttribute('formattedAddress');    
+      if (placeId && this.googlePlaceID != placeId) {
+        this.showSearchResult = false;
+        this.googlePlaceID = placeId;
+        this.googlePlaceLocation.push(lan, lat);
+        this.editRegionForm = new FormGroup({
+          name: new FormControl(formattedAddress),
+          description: new FormControl(description),  
+          location: new FormControl(this.googlePlaceLocation),
+          placeId: new FormControl(this.googlePlaceID),
+          path: new FormControl(''),  
+        });
+        console.log('from compoentns placeId : ', placeId, this.googlePlaceLocation);
+        clearInterval(getPlaceId);
+      }
+    }, 100);
   }
 
   // Fill Form Inputs With Region Data
@@ -98,15 +127,19 @@ export class EditRegionComponent implements OnInit {
   // Search Google Map Location
   searchLocation(event) {
     this.showSearchResult = true;
-    const value = of((event.target.value).trim());
-    this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(
-      data => {
-        if (data) {
-          this.googleLocationsNameList = data.predictions;
-          console.log('search data : ', this.googleLocationsNameList);
-          // this.showSearchResult = false;
-        }
-      });    
+      if (event.target.value == '') {
+          this.showSearchResult = false;
+      }
+    // this.showSearchResult = true;
+    // const value = of((event.target.value).trim());
+    // this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(
+    //   data => {
+    //     if (data) {
+    //       this.googleLocationsNameList = data.predictions;
+    //       console.log('search data : ', this.googleLocationsNameList);
+    //       // this.showSearchResult = false;
+    //     }
+    //   });    
   }
 
   // Fill Form Inputs With New Google Map Locations
@@ -200,83 +233,6 @@ export class EditRegionComponent implements OnInit {
   }
 
 
-  // This sample uses the Place Autocomplete widget to allow the user to search
-// for and select a place. The sample then displays an info window containing
-// the place ID and other information about the place that the user has
-// selected.
-
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-/*
-  initMap(): void {
-    const map = new google.maps.Map(
-      document.getElementById("map") as HTMLElement,
-      {
-        center: { lat: -33.8688, lng: 151.2195 },
-        zoom: 13,
-      }
-    );
-
-    const input = document.getElementById("pac-input") as HTMLInputElement;
-
-    const autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo("bounds", map);
-
-    // Specify just the place data fields that you need.
-    autocomplete.setFields(["place_id", "geometry", "name"]);
-
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-    const infowindow = new google.maps.InfoWindow();
-    const infowindowContent = document.getElementById(
-      "infowindow-content"
-    ) as HTMLElement;
-    infowindow.setContent(infowindowContent);
-
-    const marker = new google.maps.Marker({ map: map });
-
-    marker.addListener("click", () => {
-      infowindow.open(map, marker);
-    });
-
-    autocomplete.addListener("place_changed", () => {
-      infowindow.close();
-
-      const place = autocomplete.getPlace();
-
-      if (!place.geometry || !place.geometry.location) {
-        return;
-      }
-
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-      }
-
-      // Set the position of the marker using the place ID and location.
-      // @ts-ignore This should be in @typings/googlemaps.
-      marker.setPlace({
-        placeId: place.place_id,
-        location: place.geometry.location,
-      });
-
-      marker.setVisible(true);
-
-      (infowindowContent.children.namedItem(
-        "place-name"
-      ) as HTMLElement).textContent = place.name as string;
-      (infowindowContent.children.namedItem(
-        "place-id"
-      ) as HTMLElement).textContent = place.place_id as string;
-      (infowindowContent.children.namedItem(
-        "place-address"
-      ) as HTMLElement).textContent = place.formatted_address as string;
-      infowindow.open(map, marker);
-    });
-  }*/
 
 
 }

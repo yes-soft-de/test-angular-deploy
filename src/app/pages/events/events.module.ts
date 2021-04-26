@@ -10,10 +10,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { EventEffects } from './store/event.effects';
 import { ThemeModule } from 'src/app/@theme/theme.module';
 import { EditEventComponent } from './components/edit-event/edit-event.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 
 
 @NgModule({
-  declarations: [ListEventsComponent, AddEventComponent, EditEventComponent],
+  declarations: [ListEventsComponent, AddEventComponent, EditEventComponent, EventDetailsComponent],
   imports: [
     ThemeModule,
     EventsRoutingModule,

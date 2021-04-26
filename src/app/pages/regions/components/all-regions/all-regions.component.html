@@ -50,12 +50,15 @@
                     </a>
                   </td> -->
                   <td>
-                      <a routerLink="/regions/{{region?.id}}" class="btn btn-success btn-sm mr-1 mb-1">
+                      <a routerLink="/regions/edit/{{region?.id}}" class="btn btn-success btn-sm mr-1 mb-1">
                         {{'update' | translate}}
                     </a>
                     <a (click)="delete(region?.id)" class="btn btn-danger confirm btn-sm mr-1 mb-1 {{isDeleted ? 'disabled' : ''}}">
                         {{'delete' | translate}}
-                      </a>
+                    </a>
+                    <a routerLink="/regions/{{region?.id}}" class="btn bg-light-blue text-white btn-sm mr-1 mb-1">
+                      {{'view' | translate}}
+                    </a>
                   </td>
                 </tr>
             </table>

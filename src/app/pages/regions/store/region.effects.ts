@@ -31,8 +31,7 @@ export class RegionEffects {
         map(response => {
           // this.store.dispatch(setLoadSpinner({status: false}));
           return regionsAction.loadRegionsSuccess(response)
-        }
-        ),
+        }),
         catchError(error => {
           console.log('error effect: ', error);
           if (error.error.error) {

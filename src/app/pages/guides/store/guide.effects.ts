@@ -24,7 +24,7 @@ export class GuideEffects {
     mergeMap(() => this.guidesService.getAllGuides()
       .pipe(
         map(response => {
-          console.log(response);
+          // console.log(response);
           return guideActions.loadGuidesSuccess({Data: response.Data});
         }),
         catchError(error => of(guideActions.loadGuidesFailure({error})))
@@ -45,7 +45,7 @@ export class GuideEffects {
     exhaustMap(action => this.guidesService.updateGuideStatus(action.id, action.status)
       .pipe(
         map(response => {
-          console.log('effect response : ', response);
+          // console.log('effect response : ', response);
           this.toaster.success(response.msg);
           return guideActions.updateGuideSuccess();
         }),

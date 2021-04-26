@@ -21,7 +21,7 @@
                            id="inputNameSuccess"
                            formControlName="name"
                            placeholder="{{'name-type-placeholder' | translate}}">
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('name').errors?.required">{{'name-field-required' | translate}}</span>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('name').errors?.required">{{'name-field-is-required' | translate}}</span>
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="inputTypeSuccess">{{'type' | translate}}</label>
@@ -32,9 +32,9 @@
                         <option value="event">{{'event' | translate}}</option>
                         <option value="festival">{{'festival' | translate}}</option>
                     </select>
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('type').errors?.required">{{'type-field-required' | translate}}</span>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('type').errors?.required">{{'type-field-is-required' | translate}}</span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-form-label" for="inputSubTypeSuccess">{{'sub-type' | translate}}</label>
                     <input class="form-control"
                            [ngClass]="{'is-invalid': editEventForm.get('subType').errors &&
@@ -44,8 +44,8 @@
                            name="subType"
                            formControlName="subType"
                            placeholder="{{'sub-type-placeholder' | translate}}">
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('subType').errors?.required">{{'sub-type-field-required' | translate}}</span>
-                </div>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('subType').errors?.required">{{'sub-type-field-is-required' | translate}}</span>
+                </div> -->
                 <div class="form-group">
                     <label class="col-form-label" for="inputTypeSuccess">{{'status' | translate}}</label>
                     <select class="form-control"
@@ -56,7 +56,7 @@
                         <option value="now">{{'now' | translate}}</option>
                         <option value="done">{{'done' | translate}}</option>
                     </select>
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('status').errors?.required">{{'status-field-required' | translate}}</span>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('status').errors?.required">{{'status-field-is-required' | translate}}</span>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">{{'location' | translate}}</label>
@@ -68,7 +68,7 @@
                            id="exampleInputlocation1"
                            class="form-control"
                            placeholder="{{'location-type-placeholder' | translate}}">
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('location').errors?.required">{{'location-field-required' | translate}}</span>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('location').errors?.required">{{'location-field-is-required' | translate}}</span>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputdescription1">{{'description' | translate}}</label>
@@ -80,13 +80,28 @@
                            id="exampleInputdescription1"
                            placeholder="{{'description-type-placeholder' | translate}}">
                     </textarea>
-                    <span class="invalid-feedback" *ngIf="editEventForm.get('description').errors?.required">{{'descriptioon-field-required' | translate}}</span>
+                    <span class="invalid-feedback" *ngIf="editEventForm.get('description').errors?.required">{{'descriptioon-field-is-required' | translate}}</span>
+                </div>     
+                <div class="form-group">
+                    <label for="exampleInputupload">{{'upload' | translate}}</label>
+                    <div class="input-group input-group-custom">
+                        <div class="custom-file">
+                            <input #imageInput type="file" accept="image/*" class="custom-file-input" id="file-input"
+                                (change)="updateName(imageInput)">
+                            <label class="custom-file-label" for="file-input">{{imageName | translate}}</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" (click)="processFile(imageInput)" [disabled]=!fileSelected>
+                            {{uploadButtonValue | translate}}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn bg-sidebar-item-button text-white" [disabled]="editEventForm.invalid || isSubmited">{{'update' | translate}}</button>
+                <button type="submit" class="btn bg-sidebar-item-button text-white" [disabled]="editEventForm.invalid || imageUploaded">{{'update' | translate}}</button>
             </div>
         </form>
     </div>

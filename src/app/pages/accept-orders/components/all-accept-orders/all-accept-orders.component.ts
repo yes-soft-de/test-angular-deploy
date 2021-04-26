@@ -8,8 +8,7 @@ import {AcceptOrder} from '../../model/accept-order.model';
 
 @Component({
   selector: 'app-all-accept-orders',
-  templateUrl: './all-accept-orders.component.html',
-  styleUrls: ['./all-accept-orders.component.scss']
+  templateUrl: './all-accept-orders.component.html'
 })
 export class AllAcceptOrdersComponent implements OnInit, OnDestroy {
   acceptOrders: AcceptOrder[];
@@ -31,7 +30,7 @@ export class AllAcceptOrdersComponent implements OnInit, OnDestroy {
     this.acceptOrdersSubscription = this.store.select(getAcceptOrdersSelector).subscribe(
       data => {
         if (data) {
-          console.log('data', data);
+          // console.log('data', data);
           this.acceptOrders = data;
           this.acceptOrdersList = data;
           this.config = {

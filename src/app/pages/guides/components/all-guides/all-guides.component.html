@@ -27,7 +27,7 @@
         <tr class="bg-dark text-white">
           <td>{{'image' | translate}}</td>
           <td>{{'name' | translate}}</td>
-          <td>{{'city' | translate}}</td>
+          <!-- <td>{{'city' | translate}}</td> -->
           <td>{{'region-name' | translate}}</td>
           <td>{{'language' | translate}}</td>
           <td>{{'rating' | translate}}</td>
@@ -37,13 +37,13 @@
         <tr *ngFor="let guide of guidesList | paginate: config">
           <td><img src="{{guide?.image}}" alt="{{guide?.name}} Image" class="img-thumbnail img-custom"></td>
           <td>{{guide.name ? guide?.name : '-'}}</td>
-          <td>
+          <!-- <td>
             {{guide?.city.length == 0 ? '-' : null}}
             <span class="m-1 px-1 rounded border border-primary" *ngFor="let city of guide?.city">{{city}}</span>
-          </td>
+          </td> -->
           <td>
             {{guide?.regions.length == 0 ? '-' : null}}
-            <span class="{{region?.name ? 'm-1 px-1 rounded border border-primary' : null}}" *ngFor="let region of guide?.regions">{{region?.name ? region?.name : null}}</span>
+            <span class="{{region?.name ? 'm-1 px-1 d-block rounded border border-primary' : null}}" *ngFor="let region of guide?.regions">{{region?.name ? region?.name : null}}</span>
           </td>
           <td>
             {{guide?.language.length == 0 ? '-' : null}}

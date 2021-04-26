@@ -33,7 +33,7 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
   getAllAdmins() {
     this.adminsSubscription = this.store.select(getAllAdminsSelector).subscribe(
       data => {
-        console.log('components data : ', data);
+        // console.log('components data : ', data);
         this.admins = data;
         this.adminsList = data;
         this.config = {

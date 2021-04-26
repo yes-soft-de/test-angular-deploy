@@ -1,6 +1,6 @@
 import { MapsAPILoader } from '@agm/core';
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ActivationEnd, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,13 +13,15 @@ import { GoogleMap } from '../../model/google-map';
 import { RegionsService } from '../../services/regions.service';
 import { addRegion, deleteRegion } from '../../store/region.actions';
 import { RegionState } from '../../store/region.reducer';
+import {Client, defaultAxiosInstance} from "@googlemaps/google-maps-services-js";
+import { AsyncLocalStorage } from 'node:async_hooks';
 
 @Component({
   selector: 'app-add-region',
   templateUrl: './add-region.component.html',
   styleUrls: ['./add-region.component.scss']
 })
-export class AddRegionComponent implements OnInit {
+export class AddRegionComponent implements OnInit, OnDestroy {
   title: string = 'AGM project';
   latitude: number;
   longitude: number;
@@ -45,6 +47,8 @@ export class AddRegionComponent implements OnInit {
   private googleMapToken: string;
   showSearchResult = false;
   googleLocationsNameList: GoogleMap[];
+  googlePlaceID: string;
+  googlePlaceLocation: Array<any> = [];
 
   constructor(private store: Store<RegionState>,
               private toaster: ToastrService,
@@ -77,6 +81,35 @@ export class AddRegionComponent implements OnInit {
 
     this.checkLangChange();    
     this.getGoogleMapToken();
+    // this.test();
+  }
+
+
+  // Search Location
+  location () {
+    this.googlePlaceLocation = [];
+    const description = this.addRegionForm.get('description').value;
+    const getPlaceId = setInterval(() => {
+      const appRoot           = this.document.getElementById('app_root')
+      const placeId           = appRoot.getAttribute('placeid');    
+      const lan               = appRoot.getAttribute('lan');    
+      const lat               = appRoot.getAttribute('lat');    
+      const formattedAddress  = appRoot.getAttribute('formattedAddress');    
+      if (placeId && this.googlePlaceID != placeId) {
+        this.showSearchResult = false;
+        this.googlePlaceID = placeId;
+        this.googlePlaceLocation.push(lan, lat);
+        this.addRegionForm = new FormGroup({
+          name: new FormControl(formattedAddress),
+          description: new FormControl(description),  
+          location: new FormControl(this.googlePlaceLocation),
+          placeId: new FormControl(this.googlePlaceID),
+          path: new FormControl(''),  
+        });
+        console.log('from compoentns placeId : ', placeId, this.googlePlaceLocation);
+        clearInterval(getPlaceId);
+      }
+    }, 100);
   }
 
   // Get Google Map Token
@@ -86,21 +119,25 @@ export class AddRegionComponent implements OnInit {
 
   // Region Search Depending On The Place Name 
   searchLocation(event) {    
-    if (this.googleMapToken) {
       this.showSearchResult = true;
-      const value = of((event.target.value).trim());
-      this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(
-        data => {
-          if (data) {
-            this.googleLocationsNameList = data.predictions;
-          }
-        });    
       if (event.target.value == '') {
-        this.showSearchResult = false;
+          this.showSearchResult = false;
       }
-    } else {
-      this.toaster.error('Error Google Map Searching, Please Try Later');
-    }
+    // if (this.googleMapToken) {
+    //   this.showSearchResult = true;
+    //   const value = of((event.target.value).trim());
+    //   this.regionService.searchLocationAutoComplete(value, this.googleMapToken).subscribe(
+    //     data => {
+    //       if (data) {
+    //         this.googleLocationsNameList = data.predictions;
+    //       }
+    //     });    
+    //   if (event.target.value == '') {
+    //     this.showSearchResult = false;
+    //   }
+    // } else {
+    //   this.toaster.error('Error Google Map Searching, Please Try Later');
+    // }
   }
 
   // Fill Form Inputs With Google Search Result
@@ -196,4 +233,9 @@ export class AddRegionComponent implements OnInit {
     this.store.dispatch(addRegion({region: formObject}));    
   }
 
+  ngOnDestroy() {
+    localStorage.removeItem('place_id');
+  }
+
 }
+

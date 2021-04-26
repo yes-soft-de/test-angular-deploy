@@ -50,9 +50,9 @@
                 <span class="m-1 px-1 rounded bg-grey-blue text-white" *ngFor="let lang of guide?.language">{{lang}}</span>
               </p>
             </li>
-            <li class="mb-2" *ngIf="guide?.city">
+            <li class="mb-2" *ngIf="guide?.cities">
               <p>{{'city' | translate }} :
-                <span class="m-1 px-1 rounded border border-primary" *ngFor="let city of guide?.city">{{city}}</span>
+                <span class="m-1 px-1 rounded border border-primary d-block" *ngFor="let city of guide?.cities">{{city}}</span>
               </p>
             </li>
 <!--            <li *ngIf="guide?.regions">-->

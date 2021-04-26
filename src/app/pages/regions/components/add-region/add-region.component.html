@@ -13,13 +13,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <label class="col-form-label" for="inputNameSuccess">{{'name' | translate}}</label>
-                    <input class="form-control"
+                    <input class="form-control controls"
                            [ngClass]="{'is-invalid': addRegionForm.get('name').errors &&
                            (addRegionForm.get('name').touched || addRegionForm.get('name').dirty)}"
-                           type="text"
+                           type="text"                        
+                            id="pac-input"
+                            (change)="location()"                        
                            name="name"
                            formControlName="name"
-                           id="inputNameSuccess"
                            (keydown)="searchLocation($event)"
                            placeholder="{{'name-type-placeholder' | translate}}" autocomplete="off">
                     <div class="location-search-result px-3 py-2" *ngIf="showSearchResult">
@@ -92,4 +93,54 @@
         </form>
     </div>
     <!-- /.card -->
+</div>
+
+<div class="container">
+    <!-- <input
+    id="pac-input"
+    class="controls"
+    type="text"
+    placeholder="Search Box"
+    (change)="test()"
+  /> -->
+  <div id="map"></div>
+    <!-- <div class="pac-card" id="pac-card">
+        <div>
+          <div id="title">Autocomplete search</div>
+          <div id="type-selector" class="pac-controls">
+            <input
+              type="radio"
+              name="type"
+              id="changetype-all"
+              checked="checked"
+            />
+            <label for="changetype-all">All</label>
+  
+            <input type="radio" name="type" id="changetype-establishment" />
+            <label for="changetype-establishment">Establishments</label>
+  
+            <input type="radio" name="type" id="changetype-address" />
+            <label for="changetype-address">Addresses</label>
+  
+            <input type="radio" name="type" id="changetype-geocode" />
+            <label for="changetype-geocode">Geocodes</label>
+          </div>
+          <br />
+          <div id="strict-bounds-selector" class="pac-controls">
+            <input type="checkbox" id="use-location-bias" value="" checked />
+            <label for="use-location-bias">Bias to map viewport</label>
+  
+            <input type="checkbox" id="use-strict-bounds" value="" />
+            <label for="use-strict-bounds">Strict bounds</label>
+          </div>
+        </div>
+        <div id="pac-container">
+          <input id="pac-input" type="text" placeholder="Enter a location" />
+        </div>
+      </div>
+      <div id="map"></div>
+      <div id="infowindow-content">
+        <span id="place-name" class="title"></span><br />
+        <span id="place-address"></span>
+      </div> -->
 </div>

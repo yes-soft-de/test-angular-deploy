@@ -12,8 +12,7 @@ import {Events} from '../model/event.model';
 })
 export class EventsService {
 
-  constructor(private httpClient: HttpClient,
-              private tokenService: TokenService) { }
+  constructor(private httpClient: HttpClient) { }
 
   getEvents(): Observable<EventsResponse> {
     return this.httpClient.get<EventsResponse>(AdminConfig.eventsAPI);
@@ -34,5 +33,17 @@ export class EventsService {
       AdminConfig.eventAPI, data,
     );
   }
+
+  deleteEvent(eventId: string): Observable<any> {
+    return this.httpClient.delete<any>(`${AdminConfig.eventAPI}/${eventId}`);
+  }
+
+  // Image Section - Upload Image
+  public uploadImage(image: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this.httpClient.post<string>(AdminConfig.generalUploadAPI, formData);
+  }
+
 
 }

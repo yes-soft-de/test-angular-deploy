@@ -3,10 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AdminConfig} from '../../AdminConfig';
 import {DashboardResponse} from '../model/dashboard-response';
-import {GuidesService} from '../../guides/services/guides.service';
-import {GuideResponse} from '../../guides/model/guide-response';
 import {GuidesResponse} from '../../guides/model/guides-response';
-import {EventsService} from '../../events/services/events.service';
 import {EventsResponse} from '../../events/model/event-response.model';
 
 @Injectable({

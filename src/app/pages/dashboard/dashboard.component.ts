@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getAllGuides() {
     this.dashboardService.getAllGuides().subscribe(
       guidesResponse => {
-        console.log(guidesResponse.Data);
+        // console.log(guidesResponse.Data);
         this.allGuides = guidesResponse.Data.reverse();
       }
     );

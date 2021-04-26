@@ -29,7 +29,7 @@ export class ListEventsComponent implements OnInit, OnDestroy {
   getAllEvents() {
     this.eventsSubscription = this.store.select(getAllEventsSelector).subscribe(
       data => {
-        console.log('components data : ', data);
+        // console.log('components data : ', data);
         this.events = data;
         this.eventsList = data;
       }
@@ -44,6 +44,13 @@ export class ListEventsComponent implements OnInit, OnDestroy {
   // Fetch The Page Number On Page Change
   pageChanged(event) {
     this.config.currentPage = event;
+  }
+
+  
+  delete(eventId: string) {
+    if (confirm('Are you sure you want to delete this Event ?')) {
+      this.store.dispatch(eventAction.deleteEvent({id: eventId}));
+    }
   }
 
   applyFilter() {

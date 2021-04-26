@@ -39,7 +39,7 @@ export class UpdateGuideComponent implements OnInit {
     this.store.select(getGuideSelector).subscribe(
       response => {
         if (response) {
-          console.log('respones : ', response);
+          // console.log('respones : ', response);
           this.guide = response;
           this.fillGuideForm(response);
         }

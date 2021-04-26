@@ -34,7 +34,7 @@ export class GuideDetailsComponent implements OnInit {
     this.store.select(getGuideSelector).subscribe(
       data => {
         if (data) {
-          console.log('data: ', data);
+          // console.log('data: ', data);
           this.guide = data;
           this.guideOrdersList = data?.myOrders;
           this.config = {

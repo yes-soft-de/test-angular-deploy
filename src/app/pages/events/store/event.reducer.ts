@@ -65,6 +65,9 @@ export const reducer = createReducer(
   on(EventActions.updateEventSuccess,
     (state, action) => adapter.updateOne(action.event, state)
   ),
+  on(EventActions.deleteEventSuccess,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
 );
 
 

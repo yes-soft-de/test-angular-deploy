@@ -33,9 +33,7 @@ export const reducer = createReducer(
         ...state,
         regionDetails: action.region
       }
-    }),
-  on(RegionActions.addRegions,
-    (state, action) => adapter.addMany(action.regions, state)
+    }
   ),
   on(RegionActions.deleteRegion,
     (state, action) => adapter.removeOne(action.id, state)
@@ -43,26 +41,8 @@ export const reducer = createReducer(
   on(RegionActions.addRegion,
     (state, action) => adapter.addOne(action.region, state)
   ),
-  on(RegionActions.upsertRegion,
-    (state, action) => adapter.upsertOne(action.region, state)
-  ),
-  on(RegionActions.addRegions,
-    (state, action) => adapter.addMany(action.regions, state)
-  ),
-  on(RegionActions.upsertRegions,
-    (state, action) => adapter.upsertMany(action.regions, state)
-  ),
   on(RegionActions.updateRegionSuccess,
     (state, action) => adapter.updateOne(action.region, state)
-  ),
-  on(RegionActions.updateRegions,
-    (state, action) => adapter.updateMany(action.regions, state)
-  ),
-  on(RegionActions.deleteRegions,
-    (state, action) => adapter.removeMany(action.ids, state)
-  ),
-  on(RegionActions.clearRegions,
-    state => adapter.removeAll(state)
   ),
 );
 

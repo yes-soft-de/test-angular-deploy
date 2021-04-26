@@ -55,7 +55,6 @@ export class EventEffects {
         map(response => {
           console.log('effect response : ', response);
           this.toaster.success(response.msg);
-          this.router.navigate(['../'], {relativeTo: this.activatedRoute});
           return eventActions.addEventSuccess({Data: response.Data, msg: response.msg });
         }),
         catchError(error => of(eventActions.addEventFailure({error})))
@@ -74,20 +73,36 @@ export class EventEffects {
               ...action.Data
             }
           };
+          debugger;
           return eventActions.updateEventSuccess({event: updateEvent});
+          
         }),
         catchError(error => {
           console.log('error update effect :', error);
-          return of(eventActions.updateEventFailure(error));
+          return of(eventActions.updateEventFailure({error}));
         })
       ))
   ));
 
 
   redirectAddUpdateEvent$ = createEffect(() => this.actions$.pipe(
-    ofType(eventActions.updateEventSuccess),
+    ofType(...[eventActions.updateEventSuccess, eventActions.addEventSuccess]),
     map( () => {
       this.router.navigate(['events']);
     })
   ), { dispatch: false });
+
+
+  deleteEvent$ = createEffect(() => this.actions$.pipe(
+    ofType(eventActions.deleteEvent),
+    exhaustMap(action => this.eventService.deleteEvent(action.id)
+      .pipe(
+        map((response: any) => {
+          console.log('effect res : ', response);
+          this.toaster.success(response.msg);
+          return eventActions.deleteEventSuccess({id: action.id});
+        }),
+        catchError(error => of(eventActions.deleteEventFailure({error})))
+      ))
+  ));
 }

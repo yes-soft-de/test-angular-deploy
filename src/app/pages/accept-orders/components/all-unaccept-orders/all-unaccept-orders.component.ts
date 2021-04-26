@@ -33,7 +33,7 @@ export class AllUnAcceptOrdersComponent implements OnInit, OnDestroy {
     this.unAcceptOrdersSubscription = this.store.select(getUnAcceptOrdersSelector).subscribe(
       data => {
         if (data) {
-          console.log('un accept orders : ', data);
+          // console.log('un accept orders : ', data);
           this.unAcceptOrders = data;
           this.unAcceptOrdersList = data;
           this.config = {

@@ -17,8 +17,10 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { appReducer } from './@theme/store/app-state';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule } from '@agm/core';  
 import { environment } from 'src/environments/environment.prod';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -51,8 +53,12 @@ const firebaseConfig = environment.firebaseConfig;
         deps: [HttpClient]
       }
     }),
+    // StoreRouterConnectingModule.forRoot(),
   ],
-  providers: [AngularFirestore],
+  providers: [
+    AngularFirestore,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
   exports: [],
   bootstrap: [AppComponent]
 })

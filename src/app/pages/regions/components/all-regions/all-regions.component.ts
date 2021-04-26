@@ -35,7 +35,7 @@ export class AllRegionsComponent implements OnInit, OnDestroy {
   getAllRegions() {
     this.regionsSubscription = this.store.select(getAllRegionsSelector).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.regions = data;
         this.regionsList = data;
       }
