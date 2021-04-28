@@ -27,6 +27,7 @@
       <tr class="bg-dark text-white">
         <td>{{'guide-name' | translate }}</td>
         <td>{{'tourist-name' | translate }}</td>
+        <td>{{'region-name' | translate }}</td>
         <td>{{'services' | translate }}</td>
         <td>{{'city' | translate }}</td>
         <td>{{'arrive-date' | translate }}</td>
@@ -38,6 +39,7 @@
       <tr *ngFor="let order of acceptOrdersList | paginate: config">
         <td>{{order?.guideName ? order?.guideName : '-'}}</td>
         <td>{{order?.touristName ? order?.touristName : '-'}}</td>
+        <td>{{order?.regionName ? order?.regionName : '-'}}</td>
         <td>
           {{order?.order?.services.length == 0 ? '-' : null}}
           <span class="m-1 px-1 rounded border border-primary d-block" *ngFor="let service of order?.order?.services">{{service}}</span>

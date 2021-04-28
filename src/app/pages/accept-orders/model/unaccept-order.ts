@@ -2,6 +2,7 @@ export interface UnAcceptOrder {
   id: number;
   guideName: string;
   touristName: string;
+  regionName: string;
   arriveDate: { timestamp: number };
   city: string;
   cost: string;
